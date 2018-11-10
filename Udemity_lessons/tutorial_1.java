@@ -1,4 +1,5 @@
 /*First Udemity tutorial*/
+/*"Hello world tutorial"*/
 /*to compile Java file type "javac tutorial_1.java" in command line*/
 /*this will create Java file "tutorial_1.class"*/
 /*to execute Java program type "java tutorial_1" in command line*/
