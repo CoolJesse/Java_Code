@@ -1,6 +1,5 @@
-//second project from Java Programming Masterclass
-//java project_2 ; echo "Exit code: $?" to get exit code of program
-
+//project_2 from Java Programming Masterclass
+//To view java exit code in bash type; java project_2 && echo "Exit code: $?" 
 
 public class project_2{
 		public static void main(String[] args){
