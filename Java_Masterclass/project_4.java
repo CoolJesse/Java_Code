@@ -1,4 +1,4 @@
-//project 4 from Java Masterclass. Char and boolean primatives
+//project 4 from Java Masterclass: Char and boolean primatives
 //unicode-table.com
 
 public class project_4{
