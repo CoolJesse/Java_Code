@@ -1,69 +1,72 @@
+/*project 13 from Java Master Class: Method Overloading*/
+
 public class project_13{
 	public static void main(String[] args){
+		/*
+		int newScore = calculateScore("Jesse", 500);
+		System.out.println("New score is " + newScore);
 		
-		areEqualByThreeDecimalPlaces(0.0, 0.0);
-		areEqualByThreeDecimalPlaces(3.174, 3.175);
-		areEqualByThreeDecimalPlaces(-3.175, 3.175);
-		areEqualByThreeDecimalPlaces(0, 2.77);
-		areEqualByThreeDecimalPlaces(3.1756, 3.1757);
-		areEqualByThreeDecimalPlaces(-3.1756, 3.1757);
+		calculateScore(75);
+		calculateScore();
+		*/
+		
+		System.out.println("2 feet 8 inches: " + calcFeetAndInchesToCentimeters(2, 8) );
+		System.out.println("24 inches: " + calcFeetAndInchesToCentimeters(24) );
+		System.out.println("-4 inches: " + calcFeetAndInchesToCentimeters(-4) );
+		System.out.println("20 feet 6 inches: " + calcFeetAndInchesToCentimeters(20, 6) );
+		
+		/** Challenge ************************************************************************
+		1. Create a method called calcFeetAndInchesToCentimeters
+		2. Must have two parameters, feet as first and inches as second.
+		3. Validate first parameter feet is >= 0 and second parameter inches >= 0 && <= 12.
+		Return -1 if either of these tests fail.
+		4. Calculate how many centimeters compromise the feet and inches passed to this method and return that value.
+		
+		5. Create a second method of the same name but with only one parameter, inches
+		6. Validate the parameter is >=0. Return -1 if it is not
+		7.Calculate how many feet are in the inches and then call the two parameter method to
+		calculate the centimeters
+		**************************************************************************************/
 		
 	}
-
-	public static boolean areEqualByThreeDecimalPlaces(double n1, double n2){
-		/*Three possible cases exist: n1 == n2, n1 > n2, or n1 < n2.*/
-		if(n1 == n2){
-			//System.out.println("Match: n1==n2, n1: " + n1 + " n2: " + n2);
-			return true;
-		}
-
-		/*Four possible cases: +n1 +n2, +n1 -n2, -n1 +n2, -n1 -n2*/		
+	public static double calcFeetAndInchesToCentimeters(double feet, double inches){
+		// cm = ft/0.032808
 		
-		/*Test if n1 positive and n2 negative, or n1 negative and n2 positive*/
-		/*If one number is positive and the other negative then we know they cannot be the equal
-		up to 3 decimal places.*/
+		if(feet < 0 || inches < 0 || inches > 12)
+			return -1;
 		
-		else if( (n1 >= 0 && n2 <= 0) || (n1 <= 0 && n2 >= 0) ){
-			//System.out.println("Not a match, one number is postive, the other negative. n1: "+n1 + " n2: "+n2);
-			return false;
-		}
-		
-		/*All remaining cases both n1 and n2 must be both positive or negative*/
-		else if(n1 > n2){
-			
-			/*both numbers are positive*/
-			if((n1-n2) < 0.000999){
-				//System.out.println("Match! n1 > n2, n1: "+ n1 + " n2: "+ n2);
-				return true;
-			}
-			/*both numbers are negative*/
-			else if( ((n1+n2) > -0.001) && ((n1+n2) <= 0.0)){
-				//System.out.println("Match! n1 < n2, n1: "+ n1 + " n2: "+n2 );
-				return true;
-			}
-			else{
-				//System.out.println("Not a match, n1: " + n1 + " n2: " + n2);
-				return false;
-			}
-		}
-		
-		//n1 < n2
 		else{
-			
-			/*both numbers are positive*/
-			if((n2-n1) < 0.000999){
-				//System.out.println("Match! n1 < n2, n1: "+n1 + " n2: "+ n2 );
-				return true;
-			}
-			/*both numbers are negative*/
-			else if( ((n2+n1) > -0.001) && ((n2+n1) <= 0.0)){
-				//System.out.println("Match! n1 < n2, n1: "+n1 + " n2: "+ n2 );
-				return true;
-			}
-			else{
-				//System.out.println("Not a match, n1: " + n1 + " n2: " + n2);
-				return false;
-			}
+			feet += (inches/12);
+			double centimeters = feet/0.032808;
+		
+			return centimeters;
 		}
+	}
+	
+	public static double calcFeetAndInchesToCentimeters(int inches){
+		if(inches < 0)
+			return -1;
+		
+		else{
+			int feet = inches/12;
+			inches %= 12;
+			
+			double centimeters = calcFeetAndInchesToCentimeters(feet, inches);
+			return centimeters;
+		}
+	}
+	public static int calculateScore(String playerName, int score){
+		System.out.println("Player " + playerName + " scored " + score + " points.");
+		return score*1000;
+	}
+	
+	public static int calculateScore(int score){
+		System.out.println("Unnamed player scored " + score + " points.");
+		return score*1000;
+	}
+	
+	public static int calculateScore(){
+		System.out.println("No player name, no player score.");
+		return 0;
 	}
 }
