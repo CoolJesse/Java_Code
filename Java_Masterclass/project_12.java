@@ -1,4 +1,4 @@
-//Project 12 from Java Master Class: More on Methods
+/* Project 12 from Java Master Class; Expressions, Statements, Code Blocks, Methods, and more: More on Methods */
 
 public class project_12{
 	public static void main(String[] args){
