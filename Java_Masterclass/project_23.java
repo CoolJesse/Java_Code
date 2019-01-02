@@ -10,7 +10,7 @@
 
 Hints: use a while loop, use a counter variable, close scanner after you don't need it anymore, create a project named ReadingUserInputChallenge
 */
-import java.util.Scanner;
+import java.util.Scanner; 
 
 public class project_23{
 	public static void main(String[] args){
@@ -25,17 +25,17 @@ public class project_23{
 			
 			if(myScanner.hasNextInt()){
 				sum += myScanner.nextInt();
-				myScanner.nextLine();
 				i++;
 			}
 			
-			else{
+			else
 				System.out.println("Invalid Number.");
-				myScanner.nextLine();
-			}
+			
+			myScanner.nextLine();
 		}
 		
 		System.out.println("The sum of all 10 numbers is: " + sum);
+		myScanner.close();
 		
 	}
 }
