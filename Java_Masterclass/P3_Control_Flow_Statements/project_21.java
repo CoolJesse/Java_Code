@@ -23,8 +23,8 @@ public class project_21{
 		System.out.println("numberAsString = " + numberAsString);
 		System.out.println("number_2 = " + number_2);
 		
-		numberAsString += 1;
 		number_2 += 1;
+		numberAsString += 1;
 		
 		System.out.println("numberAsString = " + numberAsString);
 		System.out.println("number_2 = " + number_2);
