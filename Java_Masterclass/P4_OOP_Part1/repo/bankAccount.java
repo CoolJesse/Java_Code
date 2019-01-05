@@ -12,11 +12,8 @@ public class bankAccount{
 	/* Methods ***********************************************************************/
 	/* Constructors ***************************************************/
 	public bankAccount(){
-		accountNumber = 0;
-		balance = 0.0;
-		customerName = "";
-		email = "";
-		phoneNumber = 0;
+		this(0, 0.0, "", "", 0); /*calls other constructor with default values. Must be first line after constructor declaration.*/
+		//System.out.println("default constructor called.");
 	}
 	public bankAccount(int accountNumber, double balance, String customerName, String email, int phoneNumber){
 		this.accountNumber = accountNumber;
@@ -24,6 +21,11 @@ public class bankAccount{
 		this.customerName = customerName;
 		this.email = email;
 		this.phoneNumber = phoneNumber;
+		
+		//System.out.println("parameter constructor called.");
+	}
+	public bankAccount(String customerName, String email, int phoneNumber){
+		this(0, 0.0, customerName, email, phoneNumber);
 	}
 	/* Setters *******************************************************/
 	public void setAccountNumber(int accountNumber){
