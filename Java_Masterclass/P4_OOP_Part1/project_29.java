@@ -1,4 +1,6 @@
 /* Project 29 from Java Master Class, OOP Part 1: Inheritance Challenge part 1*/
+/*All Java objects inherit from Java.lang.Object, class extends Object */
+
 import vehicle.*;
 
 public class project_29{
@@ -6,11 +8,14 @@ public class project_29{
 		
 		Vehicle generalVehical = new Vehicle();
 		Car basicCar = new Car();
-		RaceCar winner = new RaceCar("red", true, "Jimmy Dean Sausage", 12.0);
+		RaceCar winner = new RaceCar("The Intimidator", "Jimmy Dean Sausage", 12.0);
 		
 		System.out.println("Vehicle: " + generalVehical.printInfo());
 		System.out.println("Car: " + basicCar.printInfo());
 		System.out.println("RaceCar: " + winner.printInfo());
+
+		winner.accelerate(30);
+
 	}
 }
 

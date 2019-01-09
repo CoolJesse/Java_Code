@@ -5,17 +5,23 @@ public class Car extends Vehicle{
 	/* Fields ***********************************************************************/
 	private int numberDoors;
 	private int numberWheels;
-	private String color;
+	private int gears;
+	private boolean isManual;
+	
+	private int currentGear;
 	
 	/* Constructors *****************************************************************/
-	public Car(String steering, String changingGears, int numberDoors, int numberWheels, String color){
-		super(steering, changingGears, 0);
-		this.numberDoors = numberDoors;
-		this.numberWheels = numberWheels;
-		this.color = color;
+	public Car(String name, String size, int wheels, int doors, int gears, boolean isManual){
+		super(name, size);
+		
+		this.numberWheels = wheels;
+		this.numberDoors = doors;
+		this.gears = gears;
+		this.isManual = isManual;
+		this.currentGear = 1;
 	}
 	public Car(){
-		this("power steering", "automatic", 4, 4, "black" );
+		this("car", "small", 0, 0, 0, false );
 	}
 	
 	/* Getters **********************************************************************/
@@ -25,8 +31,14 @@ public class Car extends Vehicle{
 	public int getNumberWheels(){
 		return numberWheels;
 	}
-	public String getColor(){
-		return color;
+	public int getGears(){
+		return gears;
+	}
+	public boolean getIsManual(){
+		return isManual;
+	}
+	public int getCurrentGear(){
+		return currentGear;
 	}
 	
 	/* Setters **********************************************************************/
@@ -36,12 +48,24 @@ public class Car extends Vehicle{
 	public void setNumberWheels(int numberWheels){
 		this.numberWheels = numberWheels;
 	}
-	public void setColor(String color){
-		this.color = color;
+	public void setGears(int gears){
+		this.gears = gears;
 	}
-
+	public void setIsManual(boolean isManual){
+		this.isManual = isManual;
+	}
+	public void setCurrentGear(int currentGear){
+		this.currentGear = currentGear;
+		System.out.println("Car.setCurrentGear(): Changed to " + this.currentGear + " gear.");
+	}
+	
+	/* Methods ***********************************************************************/
+	public void changeVelocity(int speed, int direction){
+		move(speed, direction);
+		System.out.println("Car.changeVelocity(): Velocity " + speed + " direction " + direction);
+	}
+	
 	public String printInfo(){
-		return ("steering: " + getSteering() + " changing gears: " + getChangingGears() + " moving: " + getMoving() + " doors: " + getNumberDoors() + " wheels: " + getNumberWheels() + " color: " + getColor() );
+		return ("name: " + getName() + " size: " + getSize() + " velocity: " + getVelocity() + " direction: " + getDirection() + " doors: " + this.numberDoors + " wheels: " + this.numberWheels + " gears: " + this.gears + " is manual: " + this.isManual + " current gear " + this.currentGear);//getCurrentGear() );
 	}
-
 }
