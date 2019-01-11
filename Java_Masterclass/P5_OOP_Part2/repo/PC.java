@@ -1,3 +1,4 @@
+package repo;
 
 public class PC{
 	
@@ -24,4 +25,14 @@ public class PC{
 	}
 	
 	/* Methods ******************************************************************************/
+	public void powerUp(){
+		//getTheCase().pressPowerButton();
+		theCase.pressPowerButton();//access variable directly
+		drawLogo();
+	}
+	private void drawLogo(){
+		//fancy graphics
+		monitor.drawPixelAt(1200, 50, "yellow");
+	}
+	
 }
