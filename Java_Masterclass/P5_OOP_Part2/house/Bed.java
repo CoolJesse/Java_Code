@@ -16,12 +16,17 @@ public class Bed{
 		this.hasHeadboard = hasHeadboard;
 		this.colorOfSheets = colorOfSheets;
 	}
+	public Bed(String bedsize, boolean hasHeadboard, String colorOfSheets){
+		this.bedsize = BedSize.valueOf(bedsize);
+		this.hasHeadboard = hasHeadboard;
+		this.colorOfSheets = colorOfSheets;
+	}
 	public Bed(){
 		this(BedSize.noBed, false, "");
 	}
 	
 	/* Getters *******************************************************************************/
-	public BedSize getBedsize(){
+	public BedSize getBedSize(){
 		return bedsize;
 	}
 	public boolean getHasHeadboard(){
@@ -46,10 +51,10 @@ public class Bed{
 	/* Methods *********************************************************************/
 	public String printInfo(){
 		if(hasHeadboard){
-			return("The bedsize is: " + getBedsize() + " there is a headboard " + " the color of the sheets is: " + getColorOfSheets() );
+			return("The bedsize is: " + getBedSize() + " there is a headboard " + " the color of the sheets is: " + getColorOfSheets() );
 		}
 		else{
-			return("The bedsize is: " + getBedsize() + " there is not a headboard " + " the color of the sheets is: " + getColorOfSheets() );
+			return("The bedsize is: " + getBedSize() + " there is not a headboard " + " the color of the sheets is: " + getColorOfSheets() );
 		}
 	}
 	

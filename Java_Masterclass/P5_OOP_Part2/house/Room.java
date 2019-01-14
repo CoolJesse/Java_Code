@@ -88,14 +88,14 @@ public class Room{
 		bed.setHasHeadBoard(hasHeadBoard);
 		bed.setColorOfSheets(colorOfSheets);
 	}
-	public void isLivingroom(int length, int width, boolean isFuton, String color, String material, boolean machineWashable){
+	public void isLivingroom(int couchLength, int couchWidth, boolean isFuton, String couchColor, String couchMaterial, boolean machineWashable){
 		typeOfRoom = TypeOfRoom.valueOf("livingroom");
 		
-		couch.setLength(length);
-		couch.setWidth(width);
+		couch.setLength(couchLength);
+		couch.setWidth(couchWidth);
 		couch.setIsFuton(isFuton);
 		
-		couch.setFabric(color, material, machineWashable);
+		couch.setFabric(couchColor, couchMaterial, machineWashable);
 	}
 	
 	public String printInfo(){
