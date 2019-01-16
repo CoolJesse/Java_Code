@@ -8,14 +8,20 @@ public class Printer{
 	private Scanner myScanner;
 	
 	/* Constructors **************************************************************/
-	public Printer(int tonerLevel, int pagesPrinted, boolean isDuplex){
-		this.tonerLevel = tonerLevel;
-		this.pagesPrinted = pagesPrinted;
+	public Printer(int tonerLevel, boolean isDuplex){
+		if(tonerLevel > -1){
+			this.tonerLevel = tonerLevel;
+		}
+		else{
+			this.tonerLevel = -1;
+		}
+		
+		this.pagesPrinted = 0;
 		this. isDuplex = isDuplex;
-		this.myScanner = new Scanner(System.in);
+		this.myScanner = new Scanner(System.in);	
 	}
 	public Printer(){
-		this(0, 0, false);
+		this(0, false);
 	}
 	
 	/* Getters *******************************************************************/
@@ -31,37 +37,52 @@ public class Printer{
 	
 	/* Setters *******************************************************************/
 	public void setTonerLevel(int tonerLevel){
-		this.tonerLevel = tonerLevel;
+		if(tonerLevel > -1  && tonerLevel <= 100 )
+			this.tonerLevel = tonerLevel;
+		else
+			this.tonerLevel = -1;	
 	}
 	public void setPagesPrinted(int pagesPrinted){
-		this.pagesPrinted = pagesPrinted;
+		if(pagesPrinted >= 0)
+			this.pagesPrinted = pagesPrinted;
+		else
+			this.pagesPrinted = 0;
 	}
 	public void setIsDuplex(boolean isDuplex){
 		this.isDuplex = isDuplex;
 	}
 	
 	/* Methods *******************************************************************/
-	public void fillToner(int fillAmount){
+	public int  fillToner(int fillAmount){
 		
-		if(fillAmount < 0){
+		if(fillAmount < 0){ //try to add negative amount of toner
 			System.out.println("Sorry, you cannot add a negative amount of toner to the printer.");
-			return;
+			return -1;
 		}
 		
-		if(tonerLevel == 100){
+		if(tonerLevel == 100){ //toner already full
 			System.out.println("Toner already full.");
-			return;
+			return 0;
 		}
 		
-		tonerLevel += fillAmount;
+		else{ //adding toner amount between 0 and 100
+			tonerLevel += fillAmount;
 		
-		if(tonerLevel >= 100){
-			tonerLevel = 100;
-			System.out.println("Toner full.");
+			if(tonerLevel >= 100){
+				tonerLevel = 100;
+				System.out.println("Toner full.");
+			}
+			return 0;
 		}
 	}
-	public void printPage(){
-		if(tonerLevel > 0){
+	/* For the sake of simplicity I have assumed that each page requires 1% of the toner to print. *************************************************************/
+	public int printPages(int pages){
+		if(pages < 1){
+			System.out.println("No pages printed.");
+			return -1;
+		}
+		
+		else if( (tonerLevel - pages) >= 0){
 			char answer = 'n';
 			if(isDuplex){
 				System.out.println("Would you like to print double sided: y/n ");
@@ -69,19 +90,23 @@ public class Printer{
 			}
 			if(answer == 'y'){
 				System.out.println("Printing double sided.");
-				pagesPrinted++;
-				tonerLevel--;
-				System.out.println("Printing page " + pagesPrinted);
+				pagesPrinted += ( (pages/2) + (pages%2) ); //since printing on both sides
+				tonerLevel -= pages;
+				System.out.println("Printing " + pages + " pages on " + (pages/2) + " sheets of paper.");
+				return ( (pages/2) + (pages%2) );
 			}
 			else{
 				System.out.println("Printing single sided.");
-				pagesPrinted++;
-				tonerLevel--;
-				System.out.println("Printing pages " + pagesPrinted);
+				pagesPrinted += pages;
+				tonerLevel -= pages;
+				System.out.println("Printing " + pages + " pages on " + pages + " sheets of paper.");
+				return pages;
 			}
 		}
-		else
-			System.out.println("Toner out, please refill and try again.");
+		else{
+			System.out.println("Toner low, please refill and try again.");
+			return -1;
+		}
 
 	}
 }

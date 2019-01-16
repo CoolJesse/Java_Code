@@ -12,29 +12,36 @@ whether its a duplex printer (capable of printing on both sides)
 public class project_32{
 	public static void main(String[] args){
 		
-		Printer myPrinter = new Printer(100, 0, false);
+		Printer myPrinter = new Printer(100, false);
 		
-		myPrinter.printPage();
-		myPrinter.printPage();
-		myPrinter.printPage();
+		
+		System.out.println("Total number of pages printed: " + myPrinter.getPagesPrinted());
+		
+		myPrinter.printPages(1);
+		myPrinter.printPages(2);
+		myPrinter.printPages(3);
+		
+		System.out.println("Total number of pages printed: " + myPrinter.getPagesPrinted());
+
+		myPrinter.setIsDuplex(true);
+		
+		myPrinter.printPages(-4);
+		myPrinter.printPages(0);
+		myPrinter.printPages(1000);
 		
 		myPrinter.setIsDuplex(true);
 		
-		myPrinter.printPage();
-		myPrinter.printPage();
-		myPrinter.printPage();
-		
-		myPrinter.setIsDuplex(false);
-		
-		myPrinter.printPage();
-		myPrinter.printPage();
-		myPrinter.printPage();
+		myPrinter.printPages(100);
+		myPrinter.printPages(2);
+		myPrinter.printPages(9);
 		
 		myPrinter.fillToner(2);
 		myPrinter.fillToner(-1);
 		myPrinter.fillToner(50);
 		
-		myPrinter.printPage();
+		myPrinter.printPages(100);
 		
+		System.out.println("Total number of pages printed: " + myPrinter.getPagesPrinted());
+
 	}
 }
