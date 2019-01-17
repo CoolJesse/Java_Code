@@ -49,15 +49,16 @@ class Car{
 	}
 	
 	/* Methods ***************************************/
+	/* getClass() function extended from Object class */
 	public String startEngine(){
-		return("Starting engine.");
+		return(getClass().getSimpleName() + ": Starting engine."); 
 	}
 	public String accelerate(){
-		return("Make car go now");
+		return(getClass().getSimpleName() + ": Make car go now");
 		
 	}
 	public String brake(){
-		return("Pump the brakes");
+		return(getClass().getSimpleName() + ": Pump the brakes");
 	}
 }
 /* Sub Classes ***********************************************************************/
@@ -67,11 +68,11 @@ class RaceCar extends Car{
 	}
 	@Override
 	public String startEngine(){
-		return("Gentlemen, start your engines.");
+		return(getClass().getSimpleName() + ": Gentlemen, start your engines.");
 	}
 	@Override
 	public String brake(){
-		return("Checkered Flag");
+		return(getClass().getSimpleName() + ": Checkered Flag");
 	}
 }
 
@@ -81,7 +82,7 @@ class PickupTruck extends Car{
 	}
 	@Override
 	public String startEngine(){
-		return("Let those glow plugs warm up");
+		return(getClass().getSimpleName() + ": Let those glow plugs warm up");
 	}
 }
 
@@ -91,12 +92,12 @@ class StretchLimo extends Car{
 	}
 	@Override
 	public String accelerate(){
-		return("Slowly, make sure the client doesn't spill their drink");
+		return(getClass().getSimpleName() + ": Slowly, make sure the client doesn't spill their drink");
 
 	}
 	@Override
 	public String brake(){
-		return("STOP!");
+		return(getClass().getSimpleName() + ": STOP!");
 	}
 }
 /* Main body of program ***************************************************************/
@@ -108,21 +109,21 @@ public class project_34{
 		PickupTruck truck = new PickupTruck(12, 2, "Gravedigger");
 		StretchLimo limo = new StretchLimo(true, 6, 4, "Stretch Hummer");
 		
-		System.out.println( "Car: " + car.startEngine() );
-		System.out.println( "Car: " + car.accelerate() );
-		System.out.println( "Car: " + car.brake() );
+		System.out.println( car.startEngine() );
+		System.out.println( car.accelerate() );
+		System.out.println( car.brake() );
 		
-		System.out.println( "RaceCar: " + racecar.startEngine() );
-		System.out.println( "RaceCar: " + racecar.accelerate() );
-		System.out.println( "RaceCar: " + racecar.brake() );
+		System.out.println( racecar.startEngine() );
+		System.out.println( racecar.accelerate() );
+		System.out.println( racecar.brake() );
 		
-		System.out.println( "PickupTruck: " + truck.startEngine() );
-		System.out.println( "PickupTruck: " + truck.accelerate() );
-		System.out.println( "PickupTruck: " + truck.brake() );
+		System.out.println( truck.startEngine() );
+		System.out.println( truck.accelerate() );
+		System.out.println( truck.brake() );
 		
-		System.out.println( "StretchLimo: " + limo.startEngine() );
-		System.out.println( "StretchLimo: " + limo.accelerate() );
-		System.out.println( "StretchLimo: " + limo.brake() );
+		System.out.println( limo.startEngine() );
+		System.out.println( limo.accelerate() );
+		System.out.println( limo.brake() );
 		
 		System.out.println("Car info: " + car.getEngine()+" "+ car.getAbsBrakes()+" "+ car.getCylinders()+" "+ car.getWheels()+" "+ car.getDoors() );
 		System.out.println("Racecar info: " + racecar.getEngine()+" "+ racecar.getAbsBrakes()+" "+ racecar.getCylinders()+" "+ racecar.getWheels()+" "+ racecar.getDoors());
