@@ -6,6 +6,8 @@ public class Hamburger{
 	private MeatType meat;
 	private MeatTemp temperature;
 	private BreadRollType bread;
+	private Sides side_1;
+	private Sides side_2;
 	
 	private AddOns addOn_1;
 	private AddOns addOn_2;
@@ -13,8 +15,9 @@ public class Hamburger{
 	private AddOns addOn_4;
 	
 	private double price;
-	private String name;
-	private static final int extraOptions = 0;
+	
+	private final String name = "hamburger";
+	private final int extraOptions = 0;
 	
 	/* Constructor *******************************************************************/
 	//public Hamburger(String bread, String meat, double price){
@@ -25,13 +28,13 @@ public class Hamburger{
 		
 		temperature = MeatTemp.MEDIUM;
 		
+		side_1 = Sides.NONE;
+		side_2 = Sides.NONE;
+		
 		addOn_1 = AddOns.NONE;
 		addOn_2 = AddOns.NONE;
 		addOn_3 = AddOns.NONE;
 		addOn_4 = AddOns.NONE;
-		
-		name = "hamburger";
-		//extraOptions = 0;
 	}
 	public Hamburger(){
 		this(BreadRollType.WHITE_BUN, MeatType.BEEF, 5.0);
@@ -40,6 +43,7 @@ public class Hamburger{
 	
 	/** Add toppings to burger *******************************************************/
 	public void addToppings(AddOns addOn_1, AddOns addOn_2, AddOns addOn_3, AddOns addOn_4){
+		/* First test that this burger has permission to add specified topping */
 		if(extraOptions == addOn_1.getAvailable() ){
 			this.addOn_1 = addOn_1;
 			price += addOn_1.getPrice();
@@ -56,10 +60,9 @@ public class Hamburger{
 			this.addOn_4 = addOn_4;
 			price += addOn_4.getPrice();
 		}
-		/*
-		price += (addOn_1.getPrice() + addOn_2.getPrice() + addOn_3.getPrice() + addOn_4.getPrice() );*/
 	}
 	public void addToppings(AddOns addOn_1){
+		/* First test that this burger has permission to add specified topping */		
 		if(addOn_1.getAvailable() == extraOptions){
 			if(this.addOn_1 == AddOns.NONE){
 				this.addOn_1 = addOn_1;
@@ -112,7 +115,21 @@ public class Hamburger{
 	public void meatTemperature(MeatTemp temperature){
 		this.temperature = temperature;
 	}
+	/** Add Sides **********************************************************************/
+	public void addSide(Sides item){
+		if(item.getAvailable() >= extraOptions && side_1 == Sides.NONE)
+			side_1 = item;
+		else if(item.getAvailable() >= extraOptions && side_2 == Sides.NONE)
+			side_2 = item;
+		else
+			; //do nothing
+	}
+	/** Remove Sides *******************************************************************/
 	
+	/** return name ********************************************************************/
+	public String getName(){
+		return name;
+	}
 	/** print burger info **************************************************************/
 	public String orderBurger(){
 		
