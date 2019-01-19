@@ -16,10 +16,16 @@ public class Hamburger{
 	
 	private double price;
 	
-	private final String name = "hamburger";
-	private final int extraOptions = 0;
+	//private static final String name = "hamburger";
+	private String name;
+	private int extraOptions;
 	
 	/* Constructor *******************************************************************/
+	protected void setNameAndOptions(String burgerName, int options){
+		this.name = burgerName;
+		this.extraOptions = options;
+	}
+
 	//public Hamburger(String bread, String meat, double price){
 	public Hamburger(BreadRollType bread, MeatType meat, double price){
 		this.bread = bread;
@@ -35,6 +41,8 @@ public class Hamburger{
 		addOn_2 = AddOns.NONE;
 		addOn_3 = AddOns.NONE;
 		addOn_4 = AddOns.NONE;
+	
+		setNameAndOptions("hamburger", 0);
 	}
 	public Hamburger(){
 		this(BreadRollType.WHITE_BUN, MeatType.BEEF, 5.0);
@@ -84,7 +92,7 @@ public class Hamburger{
 				;
 		}
 		else
-			System.out.println("Sorry " + addOn_1 + " is not an option for this burger");
+			System.out.println("Sorry " + addOn_1 + " is not an option for a " + getName() );
 	}
 	/**********************************************************************************/
 	/** remove toppings after they have been added ************************************/
@@ -133,7 +141,7 @@ public class Hamburger{
 	/** print burger info **************************************************************/
 	public String orderBurger(){
 		
-		String returnMessage = ("A " + meat + " " + name + " cooked " + temperature + " on a " + bread);
+		String returnMessage = (getName() + " is a " + meat + " patty cooked " + temperature + " on a " + bread);
 		
 		if(addOn_1 != AddOns.NONE)
 			returnMessage += (" with " + addOn_1.name() + " " + addOn_1.getPrice() );

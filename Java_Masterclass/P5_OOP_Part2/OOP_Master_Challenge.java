@@ -15,33 +15,69 @@ import burgers.*;
 
 public class OOP_Master_Challenge{
 	public static void main(String[] args){
+		
+		/** Initialize Hamburger, HealthyBurger, and Deluxe Burger Objects **********/
 		Hamburger burger = new Hamburger(BreadRollType.WHITE_BUN, MeatType.BEEF, 6.5);
 		Hamburger anotherBurger = new Hamburger();
+		HealthyBurger healthyBurger = new HealthyBurger();
+		DeluxeBurger deluxeBurger = new DeluxeBurger();
+		/****************************************************************************/
 		
+		/** Print details of each burger ********************************************/
 		System.out.println("burger: " + burger.orderBurger());
 		System.out.println("another burger: " + anotherBurger.orderBurger());
+		System.out.println("healthy burger: " + healthyBurger.orderBurger());
+		System.out.println("deluxe burger: " + deluxeBurger.orderBurger());
+		/****************************************************************************/
 		
+		/** Test addToppings() functions *********************************************/
 		burger.addToppings(AddOns.LETTUCE, AddOns.TOMATO, AddOns.ONION, AddOns.PICKLES);
 		anotherBurger.addToppings(AddOns.AVACADO);
+		healthyBurger.addToppings(AddOns.AVACADO);
+		healthyBurger.addToppings(AddOns.TOMATO, AddOns.LETTUCE, AddOns.ONION, AddOns.PICKLES);
+		deluxeBurger.addToppings(AddOns.TOMATO);
+		deluxeBurger.addToppings(AddOns.CHEESE, AddOns.LETTUCE, AddOns.ONION, AddOns.PICKLES);
+		/*****************************************************************************/
 		
+		/** Print details of each burger *********************************************/
 		System.out.println("burger: " + burger.orderBurger());
 		System.out.println("another burger: " + anotherBurger.orderBurger());
+		System.out.println("healthy burger: " + healthyBurger.orderBurger());
+		System.out.println("Deluxe burger: " + deluxeBurger.orderBurger());
+		/*****************************************************************************/
 		
+		/** Test removeTopping() functions *******************************************/
 		burger.removeTopping(AddOns.TOMATO);
 		burger.removeTopping(AddOns.PICKLES);
 		anotherBurger.removeTopping(AddOns.BACON);
-		anotherBurger.meatTemperature(MeatTemp.RARE);
+		/*****************************************************************************/
 		
+		/** Testing function to change meat temperature *****************************/
+		burger.meatTemperature(MeatTemp.RARE);
+		anotherBurger.meatTemperature(MeatTemp.WELL_DONE);
+		healthyBurger.meatTemperature(MeatTemp.MEDIUM_WELL);
+		deluxeBurger.meatTemperature(MeatTemp.MEDIUM_RARE);
+		/*****************************************************************************/
+		
+		/** Print details of each burger *********************************************/
 		System.out.println("burger: " + burger.orderBurger());
 		System.out.println("another burger: " + anotherBurger.orderBurger());
-		
+		System.out.println("healthy burger: " + healthyBurger.orderBurger());
+		System.out.println("another burger: " + deluxeBurger.orderBurger());
+		/****************************************************************************/
+		/** Testing addToppings functions one more time after removing toppings *****/
 		burger.addToppings(AddOns.BACON);
-		burger.addToppings(AddOns.TOMATO);
-		burger.addToppings(AddOns.NONE);
-		burger.addToppings(AddOns.BACON);
-		anotherBurger.addToppings(AddOns.CHEESE);
+		burger.addToppings(AddOns.CHEESE);
+		healthyBurger.addToppings(AddOns.SPROUTS);
+		healthyBurger.addToppings(AddOns.BACON);
+		deluxeBurger.addToppings(AddOns.CHEESE);
+		/****************************************************************************/
 		
+		/** Print details of each burger *********************************************/
 		System.out.println("burger: " + burger.orderBurger());
 		System.out.println("another burger: " + anotherBurger.orderBurger());
+		System.out.println("healthy burger: " + healthyBurger.orderBurger());
+		System.out.println("another burger: " + deluxeBurger.orderBurger());
+		/*****************************************************************************/
 	}
 }
