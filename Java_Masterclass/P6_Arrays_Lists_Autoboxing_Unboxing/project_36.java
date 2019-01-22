@@ -11,7 +11,9 @@
 import java.util.Scanner;
 
 public class project_36{
+	
 	private static Scanner scanner = new Scanner(System.in);
+	
 	public static void main(String[] args){
 		
 		int[] myIntArray = getIntegers(5);
@@ -21,6 +23,8 @@ public class project_36{
 		printArray(mySortedArray);
 		
 	}
+/** Methods ***************************************************************************/
+	/** getIntegers() **************************************************************/
 	public static int[] getIntegers(int sizeOfArray){
 		
 		int[] numToSort = new int[sizeOfArray];
@@ -32,6 +36,7 @@ public class project_36{
 		}
 		return numToSort;
 	}
+	/** printArray() ****************************************************************/
 	public static void printArray(int[] array){
 		int i=0;
 		System.out.printf("array[] = {");
@@ -40,9 +45,10 @@ public class project_36{
 		}
 		System.out.println(array[i] + "}");
 	}
+	/** sortIntegers() using bubble sort ****************************************/
 	public static int[] sortIntegers(int[] array){
 
-		/* Brute force bubble sort *********************************/
+		/** Brute force bubble sort **/
 		int[] sortedArray = array;
 		int temp;
 		for(int i=0; i<array.length; i++){
@@ -56,7 +62,8 @@ public class project_36{
 		}
 		return sortedArray;	
 	}
-/** Merge sort algorithm ***************************************************************/
+	/** Merge sort algorithms *********************************************************/
+	/** sort() divides array and calls itself recursively on each half, calling merge() to merge the sorted halves ******************************************************/
 	public static void sort(int[] arr, int left, int right){
 		
 		if(left < right){
@@ -74,7 +81,7 @@ public class project_36{
 		else
 			;/* do nothing because we have divided down to atomic level */
 	}
-/** merge two subarrays arr[left...m] and arr[m+1...right] ***************************/	
+	/** merge two subarrays arr[left...m] and arr[m+1...right] **********************/	
 	public static void merge(int[] arr, int left, int middle, int right){
 	
 		/* find size of two subarrays to be merged */
