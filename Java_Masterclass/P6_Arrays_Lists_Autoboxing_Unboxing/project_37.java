@@ -18,6 +18,7 @@ public class project_37{
 		System.out.printf("Please enter the number of elements you would like the array to contain-> ");
 		
 		int count = scanner.nextInt();
+		scanner.nextLine(); //to handle user pressing enter key
 		
 		int[] array = readIntegers(count);
 		int minValue = findMin(array);
@@ -27,16 +28,19 @@ public class project_37{
 		
 		scanner.close();
 	}
+/** Methods ***************************************************************************/
+	/** readIntegers() ***********************************************************/
 	public static int[] readIntegers(int count){
 		
 		System.out.println("Please enter " + count + " integers.");
 		int[] array = new int[count];
 		
-		for(int i=0; i<count; i++)
+		for(int i=0; i<count; i++){
 			array[i] = scanner.nextInt();
-		
+			scanner.nextLine(); //make sure we handle enter key being pressed
+		}
 		return array;
-	}
+	}/** findMin() ****************************************************************/
 	public static int findMin(int[] array){
 		
 		int min = array[0];
