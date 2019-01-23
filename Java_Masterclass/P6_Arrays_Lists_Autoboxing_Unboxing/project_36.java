@@ -9,6 +9,7 @@
 	C. sortIntegers should sort the array and return a new array containing the sorted numbers
 ****************************************************************************************/
 import java.util.Scanner;
+import java.util.Arrays;
 
 public class project_36{
 	
@@ -21,6 +22,9 @@ public class project_36{
 		
 		int[] mySortedArray = sortIntegers(myIntArray);
 		printArray(mySortedArray);
+		
+		/* built in method to print entire contents of array */
+		System.out.println("mySortedArray contents: " + Arrays.toString(mySortedArray));
 		
 	}
 /** Methods ***************************************************************************/
@@ -39,11 +43,11 @@ public class project_36{
 	/** printArray() ****************************************************************/
 	public static void printArray(int[] array){
 		int i=0;
-		System.out.printf("array[] = {");
+		System.out.printf("array[] = [");
 		for(; i< (array.length - 1); i++){
 			System.out.printf("%d, ", array[i]);
 		}
-		System.out.println(array[i] + "}");
+		System.out.println(array[i] + "]");
 	}
 	/** sortIntegers() using bubble sort ****************************************/
 	public static int[] sortIntegers(int[] array){
