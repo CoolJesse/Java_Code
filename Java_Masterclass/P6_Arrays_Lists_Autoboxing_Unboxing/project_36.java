@@ -48,15 +48,15 @@ public class project_36{
 	/** sortIntegers() using bubble sort ****************************************/
 	public static int[] sortIntegers(int[] array){
 
-		/** Brute force bubble sort **/
-		int[] sortedArray = array;
+		/** Brute force copy then bubble sort O(n^2)**/
+		int[] sortedArray = array.clone();
 		int temp;
-		for(int i=0; i<array.length; i++){
-			for(int j=i; j < array.length; j++){
-				if(array[j] < array[i]){
-					temp = array[i];
-					array[i] = array[j];
-					array[j] = temp;
+		for(int i=0; i<sortedArray.length; i++){
+			for(int j=i; j < sortedArray.length; j++){
+				if(sortedArray[j] > sortedArray[i]){
+					temp = sortedArray[i];
+					sortedArray[i] = sortedArray[j];
+					sortedArray[j] = temp;
 				}
 			}
 		}
@@ -68,7 +68,7 @@ public class project_36{
 		
 		if(left < right){
 		
-			/* find middle ""pivot" point */
+			/* find middle "pivot" point */
 			int middle = (right + left)/2;
 			
 			/* Sort first and second halves */
