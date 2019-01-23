@@ -17,7 +17,6 @@ public class project_38{
 	}
 /** methods ***************************************************************************/
 	public static void reverse(int[] array){
-		int middle = array.length/2;
 		int temp;
 		
 		for(int i=0, j=(array.length-1); i < j; i++, j--){
