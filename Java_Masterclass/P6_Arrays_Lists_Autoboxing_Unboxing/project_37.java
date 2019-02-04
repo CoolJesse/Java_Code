@@ -40,7 +40,8 @@ public class project_37{
 			scanner.nextLine(); //make sure we handle enter key being pressed
 		}
 		return array;
-	}/** findMin() ****************************************************************/
+	}
+	/** findMin() ****************************************************************/
 	public static int findMin(int[] array){
 		
 		int min = array[0];
