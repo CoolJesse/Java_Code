@@ -1,14 +1,20 @@
+import java.util.*;
+
 public class Album{
 /** Fields ***********************************************************************************/
 	private String artist;
 	private String album;
-	private List songs;
+	private List<Song> songs = new LinkedList<Song>();
 /*********************************************************************************************/
 /** Constructor ******************************************************************************/
-	public Album(String artist, String album, LinkedList<String> songs){
-		this.album = album;
+	public Album(String artist, String album, LinkedList<Song> songs){
 		this.artist = artist;
-		this.songs = songs;
+		this.album = album;
+		this.songs.addAll(songs);
+	}
+	public Album(String artist, String album){
+		this.artist = artist;
+		this.album = album;
 	}
 /*********************************************************************************************/
 /** Getters **********************************************************************************/
@@ -18,17 +24,27 @@ public class Album{
 	public String getArtist(){
 		return artist;
 	}
-	public List getSongs(){
+	public List<Song> getSongs(){
 		return songs;
 	}
 /*********************************************************************************************/
 /** Methods **********************************************************************************/
-	public void addSong(String song){
+	public void addSong(Song song){
 		if(!songs.contains(song))
 			songs.add(song);
 	}
+	public void addSong(String title, String time){
+		Song newSong = new Song(title, time);
+		if(!songs.contains(newSong))
+			songs.add(newSong);		
+	}
 	public void removeSong(String song){
 		songs.remove(song);
+	}
+	public String info(){
+		String album_info = "Artist: " + artist + '\n' + "Album: " + album  + '\n' + "tracks: " + songs.toString();
+		
+		return album_info;
 	}
 /*********************************************************************************************/
 }

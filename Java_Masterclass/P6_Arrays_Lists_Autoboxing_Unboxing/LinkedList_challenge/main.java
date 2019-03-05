@@ -15,64 +15,108 @@
 6. A song must exist in an album before it can be added to the playlist.
 7. Provide an option to remove the current song from the playlist "listiterator.remove()."
 *****************************************************************************************/
-import java.util.scanner;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+import java.util.*;
+import java.util.regex.Pattern;
 
 public class main{
+	private static String filePath = "C:\\Users\\jessetolson\\Documents\\computer_stuff\\Learning_Java\\Java_Masterclass\\P6_Arrays_Lists_Autoboxing_Unboxing\\LinkedList_challenge\\Albums_Artists_Songs.txt";
+	
 	private static Scanner scanner = new Scanner(System.in);
 	
 	public static void main(String[] args){
-		
-		List<Albums> albums = new ArrayList<>(Albums);
-		List<Song> playlist = new LinkedList<Song>();
 
+		ArrayList<Album> albums = new ArrayList<Album>();
+		LinkedList<Song> playlist = new LinkedList<Song>();
+
+		createAlbumList(albums);
 		
-		createPlaylist();
-		menu();
+		/*
+		Iterator itr = albums.iterator();
+		while(itr.hasNext()){
+			System.out.println(itr.next());
+		}
+		*/
+		//createPlaylist(albums);
+		//menu();
 		
 	}
 /** Method to create list of albums ********************************************************/
-	public void createAlbumList(List<Album> albums){
-		private static File file = new File("C:\Users\jessetolson\Documents\computer_stuff\Learning_Java\Java_Masterclass\P6_Arrays_Lists_Autoboxing_Unboxing\LinkedList_challenge\Albums_Artists_Songs");
+	public static void createAlbumList(ArrayList<Album> albums){
 		
-		Scanner fileScanner = new Scanner(file);
+		File file = new File(filePath);
+		//file.setReadable(true);
+		//System.out.println("File exists: " + file.exists());
+		//System.out.println("Can read file " + file.canRead());
+		//System.out.println("Absolute path: " + file.getAbsolutePath());
 		
-		while(fileScanner.hasNextLine()){
-			String artist = fileScanner.next();
-			String album = fileScanner.next();
-			
-			List<Song> songs = new LinkedList<songs>();
-			
-			while(!hasNext("$")){
-			String song = fileScanner.next();
-			double duration = fileScanner.nextDouble();
-			
-			songs.(new(song, duration));
+		try{
+			Scanner fileScanner = new Scanner(file);
+			Pattern p = Pattern.compile("@");
+			System.out.println("Pattern: " + p);
+		
+			while(fileScanner.hasNextLine()){
+				String artist = fileScanner.nextLine();
+				System.out.println(artist);
+				String album = fileScanner.nextLine();
+				System.out.println(album);
+				
+				
+				LinkedList<Song> songs = new LinkedList<Song>();
+				
+				while(!fileScanner.hasNext(p)){
+					String song = fileScanner.nextLine();
+					String duration = fileScanner.nextLine();
+					System.out.println("Song: " + song);
+					System.out.println(duration);
+					songs.add(new Song(song, duration));					
+					
+				}
+				albums.add(new Album(artist, album, songs));	
+			/** Skip '$' symbol **/
+				fileScanner.nextLine();				
 			}
-			
-			albums.add(new(artist, album, songs));
-			
+			fileScanner.close();			
 		}
-		fileScanner.close();
+		catch(FileNotFoundException e){
+			System.out.println(e + " Unable to read from file.");
+		}
 	}
 /*******************************************************************************************/
 /** Method to create playlist **************************************************************/
-	public static void createPlaylist(){
+	public static void createPlaylist(ArrayList<Album> albums){
 		boolean done = false;
+		
+		System.out.println("Albums: ");
+		for(int i=0; i < albums.size(); i++){
+			System.out.println(albums.get(i).getArtist() + " " + albums.get(i).getAlbum());
+		}		
+
 		while(!done){
-			System.out.println("Albums: ");
-			for(int i=0; i < albums.size(); i++){
-				System.out.println(albums.get(i).getArtist() + " " + albums.get(i).getAlbum());
-			}
 			
-			System.out.println("Add song to playlist? Y/N.");
-			char answer = scanner.nextChar();
+			System.out.println("Enter L to see list of Songs. Add song to playlist? Y/N.");
+			char answer = scanner.next().charAt(0);
 			scanner.nextLine();
 			
-			if(answer == 'Y'){
-				
+			answer = Character.toLowerCase(answer);
+			
+			if(answer == 'y'){
+				System.out.println("Adding to playlist");
 			}
-			else 
+			else if(answer == 'n'){
 				done = true;
+			}
+			else if(answer == 'l'){
+				System.out.println("Albums: ");
+				for(int i=0; i < albums.size(); i++){
+					System.out.println(albums.get(i).getArtist() + " " + albums.get(i).getAlbum());
+				}				
+			}
+			else{
+				System.out.println("Sorry, invalid answer");
+			}
 				
 		}
 	}
