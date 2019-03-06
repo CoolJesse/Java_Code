@@ -34,13 +34,18 @@ public class main{
 		createAlbumList(albums);
 		
 		/*
+		Album album_1 = new Album("The Smiths", "The Queen is Dead");
+		Album album_2 = new Album("The Smiths", "The Queen is Dead");
+		System.out.println("album 1 is the same as album 2: " + album_1.equals(album_2));
+		*/
+		/*
 		Iterator itr = albums.iterator();
 		while(itr.hasNext()){
 			System.out.println(itr.next());
 		}
 		*/
-		//createPlaylist(albums);
-		//menu();
+		createPlaylist(albums, playlist);
+		menu(playlist);
 		
 	}
 /** Method to create list of albums ********************************************************/
@@ -55,27 +60,22 @@ public class main{
 		try{
 			Scanner fileScanner = new Scanner(file);
 			Pattern p = Pattern.compile("@");
-			System.out.println("Pattern: " + p);
 		
 			while(fileScanner.hasNextLine()){
 				String artist = fileScanner.nextLine();
-				System.out.println(artist);
 				String album = fileScanner.nextLine();
-				System.out.println(album);
-				
 				
 				LinkedList<Song> songs = new LinkedList<Song>();
 				
 				while(!fileScanner.hasNext(p)){
 					String song = fileScanner.nextLine();
 					String duration = fileScanner.nextLine();
-					System.out.println("Song: " + song);
-					System.out.println(duration);
+
 					songs.add(new Song(song, duration));					
 					
 				}
 				albums.add(new Album(artist, album, songs));	
-			/** Skip '$' symbol **/
+			/** Skip '@' symbol **/
 				fileScanner.nextLine();				
 			}
 			fileScanner.close();			
@@ -86,24 +86,55 @@ public class main{
 	}
 /*******************************************************************************************/
 /** Method to create playlist **************************************************************/
-	public static void createPlaylist(ArrayList<Album> albums){
+	public static void createPlaylist(ArrayList<Album> albums, LinkedList<Song> playlist){
 		boolean done = false;
 		
 		System.out.println("Albums: ");
 		for(int i=0; i < albums.size(); i++){
-			System.out.println(albums.get(i).getArtist() + " " + albums.get(i).getAlbum());
+			/*System.out.println(albums.get(i).getArtist() + " " + albums.get(i).getAlbum());*/
+			System.out.println(albums.get(i).info());
+			System.out.println("");
 		}		
 
 		while(!done){
 			
-			System.out.println("Enter L to see list of Songs. Add song to playlist? Y/N.");
+			System.out.print("To see list of albums and songs enter L. Would you like to add a song to the playlist Y/N-> ");
 			char answer = scanner.next().charAt(0);
 			scanner.nextLine();
 			
 			answer = Character.toLowerCase(answer);
 			
 			if(answer == 'y'){
-				System.out.println("Adding to playlist");
+				System.out.print("Artist-> ");
+				String artist = scanner.nextLine();
+				
+				System.out.print("Album-> ");
+				String album = scanner.nextLine();
+				
+				System.out.print("Song Title->");
+				String songTitle = scanner.nextLine();
+				
+				int index = albums.indexOf(new Album(artist, album));
+
+				if(index != -1){
+					//System.out.println("Postion of " + artist + " " + album + " is " + index);	
+					Iterator<Song> itr = albums.get(index).getSongs().iterator();
+					boolean found = false;
+					while(itr.hasNext()){
+						Song temp = itr.next();
+						if(temp.getTitle().equals(songTitle)){
+							//System.out.println("Added to playlist
+							playlist.add(new Song(temp));
+							found = true;
+							break;
+						}
+					}
+					if(found == false){
+						System.out.println("Sorry, could not find that song");
+					}	
+				}
+				else
+					System.out.println("Sorry, could not find that artist or album.");
 			}
 			else if(answer == 'n'){
 				done = true;
@@ -111,17 +142,18 @@ public class main{
 			else if(answer == 'l'){
 				System.out.println("Albums: ");
 				for(int i=0; i < albums.size(); i++){
-					System.out.println(albums.get(i).getArtist() + " " + albums.get(i).getAlbum());
-				}				
+					System.out.println(albums.get(i).info());
+				}	
+				System.out.println("");
 			}
 			else{
-				System.out.println("Sorry, invalid answer");
+				System.out.println("Sorry, invalid input");
 			}
 				
 		}
 	}
 /** Method to control listening experience *************************************************/
-	public static void menu(){
+	public static void menu(LinkedList<Song> playlist){
 		System.out.println("---------- Menu ----------");
 		System.out.println("| Quit: 1                |");
 		System.out.println("| Skip Forward: 2        |");
@@ -129,5 +161,34 @@ public class main{
 		System.out.println("| Replay Current Song: 4 |");
 		System.out.println("| Display Playlist: 5    |");
 		System.out.println("--------------------------");
+		
+		ListIterator<Song> itr = playlist.listIterator();
+		Song currentSong = itr.next();
+		while(itr.hasNext()){
+			//Song temp = itr.next();
+			System.out.println("current track: " + currentSong.getTitle() + " " + currentSong.getDuration() );
+			
+			System.out.print("Enter 6 to see menu again -> ");
+			char command = scanner.next().charAt(0);
+			
+			switch(command){
+				case 1:
+					return;
+					//break;
+				case 2:
+					currentSong = itr.next();
+					break;
+				case 3:
+					break;
+				case 4:
+					currentSong = itr.previous();
+					break;
+				case 5:
+					break;
+				default:
+					break;
+				
+			}
+		}
 	}
 }

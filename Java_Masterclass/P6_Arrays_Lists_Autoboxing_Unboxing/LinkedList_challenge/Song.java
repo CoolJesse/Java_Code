@@ -9,6 +9,10 @@ public class Song{
 		this.title = title;
 		this.duration = duration;
 	}
+	public Song(Song newSong){
+		this.title = newSong.getTitle();
+		this.duration = newSong.getDuration();
+	}
 /**********************************************************************************************/
 /** Getters ***********************************************************************************/
 	public String getTitle(){
@@ -19,18 +23,19 @@ public class Song{
 	}
 /**********************************************************************************************/
 /** Methods ***********************************************************************************/
-	//@Override
-	public boolean equals(Song song){
+	@Override
+	public boolean equals(Object obj){
 		
-		if( this == song)
-			return true;
-		
-		if(!(song instanceof Song))
+		if(obj != null && getClass() == obj.getClass()){
+			if(this == obj)
+				return true;
+			
+			Song temp = (Song)obj;
+			
+			return (title.equals(temp.title) && duration.equals(temp.duration));
+		}
+		else
 			return false;
-		
-		Song temp = (Song) song;
-		
-		return (title.equals(temp.title) && duration.equals(temp.duration));
 	}
 	@Override
 	public String toString(){

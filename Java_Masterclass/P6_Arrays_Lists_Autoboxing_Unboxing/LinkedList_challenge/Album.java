@@ -46,5 +46,19 @@ public class Album{
 		
 		return album_info;
 	}
+	@Override
+	public boolean equals(Object obj){
+		
+		if(obj != null && getClass() == obj.getClass()){
+			if(this == obj)
+				return true;
+			
+			Album temp = (Album)obj;
+			
+			return (artist.equals(temp.artist) && album.equals(temp.album));
+		}
+		else
+			return false;
+	}
 /*********************************************************************************************/
 }
