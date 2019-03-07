@@ -111,7 +111,7 @@ public class main{
 				System.out.print("Album-> ");
 				String album = scanner.nextLine();
 				
-				System.out.print("Song Title->");
+				System.out.print("Song Title-> ");
 				String songTitle = scanner.nextLine();
 				
 				int index = albums.indexOf(new Album(artist, album));
@@ -160,34 +160,59 @@ public class main{
 		System.out.println("| Skip Backward: 3       |");
 		System.out.println("| Replay Current Song: 4 |");
 		System.out.println("| Display Playlist: 5    |");
+		System.out.println("| Display Menu: 6        |");
 		System.out.println("--------------------------");
 		
 		ListIterator<Song> itr = playlist.listIterator();
-		Song currentSong = itr.next();
+		
 		while(itr.hasNext()){
-			//Song temp = itr.next();
-			System.out.println("current track: " + currentSong.getTitle() + " " + currentSong.getDuration() );
-			
-			System.out.print("Enter 6 to see menu again -> ");
-			char command = scanner.next().charAt(0);
-			
+			Song currentSong = itr.next();
+			System.out.println("current track: " + currentSong.getTitle() + " " +currentSong.getDuration() );
+				
+			System.out.print("-> ");
+			int command = scanner.nextInt();
+			scanner.nextLine();
+				
 			switch(command){
+			/** Quit **/
 				case 1:
 					return;
-					//break;
-				case 2:
-					currentSong = itr.next();
+			/** Skip to next track **/
+				case 2:	
+					if(!itr.hasNext())
+						System.out.println("End of playlist");
 					break;
+			/** Skip back to previous song **/
 				case 3:
+					if(itr.hasPrevious())
+						currentSong = itr.previous();
+					if(itr.hasPrevious())
+						currentSong = itr.previous();			
 					break;
+			/** Repeat song **/
 				case 4:
-					currentSong = itr.previous();
+					if(itr.hasPrevious())
+						currentSong = itr.previous();
 					break;
+			/** Display playlist **/
 				case 5:
+					Iterator<Song> itr_2 = playlist.iterator();
+					while(itr_2.hasNext()){
+						Song temp = itr_2.next();
+						System.out.println(temp.getTitle() + " " + temp.getDuration());
+						}
 					break;
+			/** Show menu **/
 				default:
+					System.out.println("---------- Menu ----------");
+					System.out.println("| Quit: 1                |");
+					System.out.println("| Skip Forward: 2        |");
+					System.out.println("| Skip Backward: 3       |");
+					System.out.println("| Replay Current Song: 4 |");
+					System.out.println("| Display Playlist: 5    |");
+					System.out.println("| Display Menu: 6        |");
+					System.out.println("--------------------------");	
 					break;
-				
 			}
 		}
 	}
