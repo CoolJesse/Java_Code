@@ -33,17 +33,6 @@ public class main{
 
 		createAlbumList(albums);
 		
-		/*
-		Album album_1 = new Album("The Smiths", "The Queen is Dead");
-		Album album_2 = new Album("The Smiths", "The Queen is Dead");
-		System.out.println("album 1 is the same as album 2: " + album_1.equals(album_2));
-		*/
-		/*
-		Iterator itr = albums.iterator();
-		while(itr.hasNext()){
-			System.out.println(itr.next());
-		}
-		*/
 		createPlaylist(albums, playlist);
 		menu(playlist);
 		
@@ -89,41 +78,41 @@ public class main{
 	public static void createPlaylist(ArrayList<Album> albums, LinkedList<Song> playlist){
 		boolean done = false;
 		
+	/** Print list of all albums **/
 		System.out.println("Albums: ");
 		for(int i=0; i < albums.size(); i++){
-			/*System.out.println(albums.get(i).getArtist() + " " + albums.get(i).getAlbum());*/
 			System.out.println(albums.get(i).info());
 			System.out.println("");
 		}		
 
 		while(!done){
 			
-			System.out.print("To see list of albums and songs enter L. Would you like to add a song to the playlist Y/N-> ");
+			System.out.print("To see list of albums and songs enter L. Would you like to add a song to the playlist Y/N -> ");
 			char answer = scanner.next().charAt(0);
 			scanner.nextLine();
 			
 			answer = Character.toLowerCase(answer);
 			
 			if(answer == 'y'){
-				System.out.print("Artist-> ");
+				System.out.print("Artist -> ");
 				String artist = scanner.nextLine();
 				
-				System.out.print("Album-> ");
+				System.out.print("Album -> ");
 				String album = scanner.nextLine();
 				
-				System.out.print("Song Title-> ");
+				System.out.print("Song Title -> ");
 				String songTitle = scanner.nextLine();
 				
 				int index = albums.indexOf(new Album(artist, album));
 
 				if(index != -1){
-					//System.out.println("Postion of " + artist + " " + album + " is " + index);	
+				/** Initialize iterator to iterate through linked list of songs **/
 					Iterator<Song> itr = albums.get(index).getSongs().iterator();
 					boolean found = false;
+					
 					while(itr.hasNext()){
 						Song temp = itr.next();
 						if(temp.getTitle().equals(songTitle)){
-							//System.out.println("Added to playlist
 							playlist.add(new Song(temp));
 							found = true;
 							break;
@@ -149,7 +138,6 @@ public class main{
 			else{
 				System.out.println("Sorry, invalid input");
 			}
-				
 		}
 	}
 /** Method to control listening experience *************************************************/
