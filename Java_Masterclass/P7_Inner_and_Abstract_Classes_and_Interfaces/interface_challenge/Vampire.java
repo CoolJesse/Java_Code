@@ -49,9 +49,9 @@ public class Vampire implements IMonsters{
 	}
 /** methods *******************************************************************/
 	@Override
-	public ArrayList<String> outputTraits(){
+	public List<String> outputTraits(){
 
-		ArrayList<String> traits = new ArrayList<String>();
+		List<String> traits = new ArrayList<String>();
 		traits.add(typeOfCreature);
 		traits.add(weakness);
 		traits.add(personName);
@@ -62,18 +62,19 @@ public class Vampire implements IMonsters{
 	}
 	@Override
 	public void inputTraits(List<String> info){
-
-		Iterator itr = info.iterator();
-		
-		if(itr.hasNext())
-			personName = itr.next().toString();
-		if(itr.hasNext()){
-			age = itr.next().toString();
-			if(Integer.parseInt(age) < 0)
-				age = "0";
+		if(info !=  null && info.size() > 0){
+			Iterator itr = info.iterator();
+			
+			if(itr.hasNext())
+				personName = itr.next().toString();
+			if(itr.hasNext()){
+				age = itr.next().toString();
+				if(Integer.parseInt(age) < 0)
+					age = "0";
+			}
+			if(itr.hasNext())
+				gender = Gender.valueOf( itr.next().toString() );
 		}
-		if(itr.hasNext())
-			gender = Gender.valueOf( itr.next().toString() );
 	}
 	@Override
 	public String toString(){

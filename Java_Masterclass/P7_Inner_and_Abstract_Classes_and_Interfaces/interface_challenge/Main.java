@@ -27,13 +27,13 @@ public class Main{
 		
 		System.out.println("-------- Testing inherited outputTraits() -----------");
 		
-		ArrayList<String> wolfmanTraitsList = Bob.outputTraits();
+		List<String> wolfmanTraitsList = Bob.outputTraits();
 		System.out.println(wolfmanTraitsList.toString());
 		
 		wolfmanTraitsList = Alice.outputTraits();
 		System.out.println(wolfmanTraitsList.toString());
 		
-		ArrayList<String> vampireTraitsList = Vlad.outputTraits();
+		List<String> vampireTraitsList = Vlad.outputTraits();
 		System.out.println(vampireTraitsList.toString());
 
 		vampireTraitsList = Janet.outputTraits();
@@ -96,4 +96,13 @@ public static ArrayList<String> readValues() {
         }
         return values;
     }	
+	public static void saveObject(IMonsters objectToSave){
+		for(int i=0; i<objectToSave.outputTraits().size(); i++){
+			System.out.println("Saving " + objectToSave.outputTraits().get(i) + " to storage device.");
+		}
+	}
+	public static void loadObject(IMonsters objectToLoad){
+		ArrayList<String> values = readValues();
+		objectToLoad.inputTraits(values);
+	}
 }
