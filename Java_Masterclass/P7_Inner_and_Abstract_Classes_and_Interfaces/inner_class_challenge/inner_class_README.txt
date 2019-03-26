@@ -2,4 +2,4 @@
 
 * The inner Songlist class will use an ArrayList and will provide a method to add a song. It will also provide a method called "findSong()" which will be used by the containing Album class to add songs to the playlist.
 
-* Neither the Song clas or the Main class should be changed.
+* Neither the Song class or the Main class should be changed.

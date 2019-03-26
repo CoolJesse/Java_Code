@@ -32,7 +32,6 @@ public class main{
 		LinkedList<Song> playlist = new LinkedList<Song>();
 
 		createAlbumList(albums);
-		
 		createPlaylist(albums, playlist);
 		menu(playlist);
 		
@@ -60,8 +59,7 @@ public class main{
 					String song = fileScanner.nextLine();
 					String duration = fileScanner.nextLine();
 
-					songs.add(new Song(song, duration));					
-					
+					songs.add(new Song(song, duration));						
 				}
 				albums.add(new Album(artist, album, songs));	
 			/** Skip '@' symbol **/
@@ -81,7 +79,7 @@ public class main{
 	/** Print list of all albums **/
 		System.out.println("Albums: ");
 		for(int i=0; i < albums.size(); i++){
-			System.out.println(albums.get(i).info());
+			System.out.println(albums.get(i).toString());
 			System.out.println("");
 		}		
 
@@ -131,7 +129,7 @@ public class main{
 			else if(answer == 'l'){
 				System.out.println("Albums: ");
 				for(int i=0; i < albums.size(); i++){
-					System.out.println(albums.get(i).info());
+					System.out.println(albums.get(i).toString());
 				}	
 				System.out.println("");
 			}
