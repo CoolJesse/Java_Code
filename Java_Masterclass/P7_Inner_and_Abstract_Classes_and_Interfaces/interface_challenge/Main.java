@@ -106,3 +106,4 @@ public static ArrayList<String> readValues() {
 		objectToLoad.inputTraits(values);
 	}
 }
+ 
