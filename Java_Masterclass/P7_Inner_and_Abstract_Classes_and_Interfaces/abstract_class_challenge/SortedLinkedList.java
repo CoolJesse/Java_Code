@@ -1,6 +1,9 @@
 import java.util.Iterator;
 
 public class SortedLinkedList<E extends Comparable<E>> extends SortedList<E>{
+/**************************************** FIELDS ********************************************/
+	private Node<E> head;
+	private Node<E> tail;
 /************************************* CONSTRUCTORS *****************************************/
 	public SortedLinkedList(Node<E> newNode){
 		head = newNode;
@@ -34,35 +37,35 @@ public class SortedLinkedList<E extends Comparable<E>> extends SortedList<E>{
 					return false;	
 			// The element to add is greater than current element //
 				else if(element.compareTo(tempNode.element) > 0){
-					tempNode = tempNode.nextNode;
+					tempNode = tempNode.rightNode;
 				}
 			// The element to add is less than current element
 				else{
 				// If current node is head add to front of list
 					if(tempNode == head){
 						tempNode = new Node<E>(null, head, element);
-						head.previousNode = tempNode;
+						head.leftNode = tempNode;
 						head = tempNode;
 						size++;
 					}
 				// If current node is any node other than head
 					else{
 					// Create new node to add to list
-						Node<E> tempNode2 = new Node<E>(tempNode.previousNode, tempNode, element);
+						Node<E> tempNode2 = new Node<E>(tempNode.leftNode, tempNode, element);
 						/*
-						tempNode = tempNode.previousNode;
-						tempNode.nextNode = tempNode2;
+						tempNode = tempNode.leftNode;
+						tempNode.rightNode = tempNode2;
 						*/
-						tempNode.previousNode.nextNode = tempNode2;
-						tempNode.previousNode = tempNode2;
+						tempNode.leftNode.rightNode = tempNode2;
+						tempNode.leftNode = tempNode2;
 						size++;
 					}
 					return true;
 				}
 			}
 		// Reached end of list so add element to end
-			tail.nextNode = new Node<E>(tail, null, element);
-			tail = tail.nextNode;
+			tail.rightNode = new Node<E>(tail, null, element);
+			tail = tail.rightNode;
 			size++;
 			return true;
 		}
@@ -87,7 +90,7 @@ public class SortedLinkedList<E extends Comparable<E>> extends SortedList<E>{
 				if(tempNode.element.equals(object))
 					return true;
 				else
-					tempNode = tempNode.nextNode;
+					tempNode = tempNode.rightNode;
 			}
 		}
 		return false;
@@ -113,7 +116,7 @@ public class SortedLinkedList<E extends Comparable<E>> extends SortedList<E>{
 		else{
 			Node<E> temp = head;
 			for(int i=0; i<index; i++){
-				temp = temp.nextNode;
+				temp = temp.rightNode;
 			}
 			return temp.element;
 		}
@@ -136,7 +139,7 @@ public class SortedLinkedList<E extends Comparable<E>> extends SortedList<E>{
 				//else if(tempNode.element.compareTo(object) > 0)
 					//return -1;
 				else
-					tempNode = tempNode.nextNode;
+					tempNode = tempNode.rightNode;
 			}
 		}
 		return -1;
@@ -168,15 +171,15 @@ public class SortedLinkedList<E extends Comparable<E>> extends SortedList<E>{
 	//check if the index is the first element in the list
 		else if(index == 0){
 			E item = head.element;
-			head = head.nextNode;
+			head = head.rightNode;
 			size--;
 			return item;
 		}
 	//check if index is the last element in the list
 		else if(index == (size-1)){
 			E item = tail.element;
-			tail = tail.previousNode;
-			tail.nextNode = null;
+			tail = tail.leftNode;
+			tail.rightNode = null;
 			size--;
 			return item;
 		}
@@ -184,14 +187,14 @@ public class SortedLinkedList<E extends Comparable<E>> extends SortedList<E>{
 			Node<E> tempNode = head;
 			for(int i=0; i < size; i++){
 				if(i == (index-1) ){
-					E item = tempNode.nextNode.element;
-					tempNode.nextNode = tempNode.nextNode.nextNode;
-					tempNode.nextNode.previousNode = tempNode;
+					E item = tempNode.rightNode.element;
+					tempNode.rightNode = tempNode.rightNode.rightNode;
+					tempNode.rightNode.leftNode = tempNode;
 					size--;
 					return item;
 				}
 				else
-					tempNode = tempNode.nextNode;
+					tempNode = tempNode.rightNode;
 			}
 			return null;
 		}
@@ -206,27 +209,27 @@ public class SortedLinkedList<E extends Comparable<E>> extends SortedList<E>{
 		
 		else if(object != null && head.element.getClass() == object.getClass()){
 		
-			for(Node<E> temp = head; temp != null; temp = temp.nextNode){
+			for(Node<E> temp = head; temp != null; temp = temp.rightNode){
 			// Found a match
 				if(temp.element.equals(object)){
 				// If object to be deleted is pointed to by head
 					if(temp == head){
-						head = head.nextNode;
+						head = head.rightNode;
 						size--;
 						return true;
 					}
 				// If object to be deleted is pointed to by tail
 					else if(temp == tail){
-						tail = tail.previousNode;
-						tail.nextNode = null;
+						tail = tail.leftNode;
+						tail.rightNode = null;
 						size--;
 						return true;
 					}
 					else{
-						Node<E> temp2 = temp.previousNode;
-						temp2.nextNode = temp.nextNode;
-						temp = temp.nextNode;
-						temp.previousNode = temp2;
+						Node<E> temp2 = temp.leftNode;
+						temp2.rightNode = temp.rightNode;
+						temp = temp.rightNode;
+						temp.leftNode = temp2;
 						
 						size--;
 						return true;
@@ -252,9 +255,9 @@ public class SortedLinkedList<E extends Comparable<E>> extends SortedList<E>{
 			String returnString = "";
 			
 			Node<E> temp = head;
-			while(temp.nextNode != null){
+			while(temp.rightNode != null){
 				returnString += temp.element.toString() + ", ";
-				temp = temp.nextNode;
+				temp = temp.rightNode;
 			}
 			returnString += temp.element.toString();
 			
@@ -268,7 +271,7 @@ public class SortedLinkedList<E extends Comparable<E>> extends SortedList<E>{
 		Node<E> tempNode = tail;
 		while(tempNode != null){
 			list += (tempNode.element + " ");
-			tempNode = tempNode.previousNode;
+			tempNode = tempNode.leftNode;
 		}
 		return list;
 	}
@@ -280,7 +283,7 @@ public class SortedLinkedList<E extends Comparable<E>> extends SortedList<E>{
 		if(node == null)
 			return;
 		else{
-			helpClear(node.nextNode);
+			helpClear(node.rightNode);
 			node = null;
 		}
 	}

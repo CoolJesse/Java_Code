@@ -3,7 +3,8 @@ import java.lang.*;
 public class Main{
 	public static void main(String[] args){
 		
-		SortedLinkedList<Integer> list = new SortedLinkedList<>();
+		//SortedLinkedList<Integer> list = new SortedLinkedList<>();
+		SortedTreeList<Integer> list = new SortedTreeList<>();
 	
 		System.out.println("List isEmpty() is: " + list.isEmpty() );
 		System.out.println("List.size(): " + list.size() );
@@ -20,6 +21,7 @@ public class Main{
 		System.out.println("list.size() " + list.size() );
 		System.out.println(list.toString());
 		
+		/*
 		System.out.println("List contains 5: " + list.contains(5) );
 		System.out.println("List contains 500: " + list.contains(500));
 		System.out.println("List contains -5: " + list.contains(-5));
@@ -46,5 +48,11 @@ public class Main{
 		list.remove(-1);		
 		
 		System.out.println("List after removes: " + list.toString());
+		*/
+		System.out.println("Testing clear()...");
+		list.clear();
+		System.out.println("list after calling clear(): " + list.toString());
+		System.out.println("list empty: " + list.isEmpty());
+		System.out.println("list size: " + list.size());
 	}
 }
