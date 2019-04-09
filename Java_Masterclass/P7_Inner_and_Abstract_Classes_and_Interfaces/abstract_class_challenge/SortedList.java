@@ -43,35 +43,10 @@ abstract class SortedList<E extends Comparable<E>>{
 	protected Node<E> head;
 	protected Node<E> tail;
 	*/
-	
 	protected int size;
 	//type used for casting object to generic type when using compareTo() function
 	protected Class<E> type;
-/** Getters ********************************************************************************/
-
-	/*
-	public Node<E> getHead(){
-		return head;
-	}
-	public Node<E> getTail(){
-		return tail;
-	}
-	public int getSize(){
-		return size;
-	}
-	*/
-/** Setters ********************************************************************************/
-	/*
-	public void setHead(Node<E> newNode){
-		head = newNode;
-	}
-	public void setTail(Node<E> newNode){
-		tail = newNode;
-	}
-	public void setSize(int size){
-		this.size = size; 	
-	}
-	*/
+	
 /** Methods ********************************************************************************/
 	public abstract boolean add(E element);
 	public abstract void clear();

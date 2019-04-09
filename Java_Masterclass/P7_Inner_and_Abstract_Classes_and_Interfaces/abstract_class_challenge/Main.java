@@ -21,8 +21,8 @@ public class Main{
 		System.out.println("list.size() " + list.size() );
 		System.out.println(list.toString());
 		
-		/*
 		System.out.println("List contains 5: " + list.contains(5) );
+		/*
 		System.out.println("List contains 500: " + list.contains(500));
 		System.out.println("List contains -5: " + list.contains(-5));
 		System.out.println("List contains a " + list.contains('a'));

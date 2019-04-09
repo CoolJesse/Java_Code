@@ -1,6 +1,7 @@
 public class SortedTreeList<E extends Comparable<E>> extends SortedList<E>{
 /*************************************** FIELDS ********************************************/
 	private Node<E> root;
+	//private Class<E> type;	
 /*******************************************************************************************/
 /************************************* CONSTRUCTOR *****************************************/
 	public SortedTreeList(Node<E> rootNode){
@@ -33,9 +34,34 @@ public class SortedTreeList<E extends Comparable<E>> extends SortedList<E>{
 	public void clear(){
 		root = clearNodes(root);
 	}
-/*******************************************************************************************/	
+/*******************************************************************************************/
+/************************************ contains(Object) *************************************/
 	@Override	
-	public boolean contains(Object object){return true;}
+	public boolean contains(Object object){
+	// First check is tree list is empty
+		if(isEmpty())
+			return false;
+	// Check that object is not null and is of same class type as element
+		else if(object != null && root.element.getClass() == object.getClass()){
+			try{
+				E objAsType = type.cast(object);
+				//E objAsType = (root.element.getClass())(object);
+				return ( find(root, objAsType, 0) > -1 );
+				//return ( find(root, type.cast(object), 0) > -1 );
+			}
+			
+			catch(ClassCastException e){
+				return false;
+			}
+			catch(NullPointerException e){
+				return false;
+			}
+		}
+	// If object is either null or not of the same class type as element return false
+		else 
+			return false;
+	}
+/*******************************************************************************************/
 	//public boolean equals(Object object);
 /*******************************************************************************************/	
 	@Override	
@@ -102,6 +128,22 @@ public class SortedTreeList<E extends Comparable<E>> extends SortedList<E>{
 		size--;
 		return null;
 		
+	}
+/*******************************************************************************************/
+/***************************** find(Node<E>, element, index) *******************************/
+	private int find(Node<E> node, E element, int index){
+	// If we reach the end of the tree and haven't found element
+		if(node == null || element == null)
+			return -1;
+	// If element is less than current node's element
+		if(element.compareTo(node.element) < 0)
+			return find(node.leftNode, element, index +1);
+	// If element is greater than current nodes's element
+		else if(element.compareTo(node.element) > 0)
+			return find(node.rightNode, element, index + 1);
+	// If element matches current node's element
+		else
+			return index;
 	}
 /*******************************************************************************************/
 /************************************ print(Node<E>) ***************************************/
