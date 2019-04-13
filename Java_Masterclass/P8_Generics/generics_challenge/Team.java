@@ -1,7 +1,7 @@
 import java.util.List;
 import java.util.ArrayList;
 
-public class Team{
+public abstract class Team implements Comparable<Team>{
 /************************************** Fields ***********************************************/
 	protected String name;
 	protected String sport;
@@ -40,8 +40,19 @@ public void setName(String name){
 		this.rank = rank;
 	}
 	public void setPlayers(List<String> players){
-		players.clear();
-		players.addAll(players);
+		if(!this.players.isEmpty())
+			this.players.clear();
+		
+		this.players.addAll(players);
+	}
+// Allows to pass a variable number of arguments to the method
+	public void setPlayers(String... players){
+		if(!this.players.isEmpty())
+			this.players.clear();
+		
+		for(String p : players){
+			this.players.add(p);
+		}
 	}
 /****************************************** METHODS ******************************************/
 	public void addPlayer(String name){
@@ -74,8 +85,28 @@ public void setName(String name){
 			return false;
 	}
 	@Override
+	public boolean equals(Object obj){
+		if(obj != null && this.getClass() == obj.getClass()){
+			Team temp = (Team)obj;
+			return (this.getName()==temp.getName());
+		}
+		else 
+			return false;
+	}
+	@Override
+	//public int compareTo(Object obj){
+	public int compareTo(Team obj){
+		Team temp = (Team)obj;
+		
+		Integer thisInt = this.getRank();
+		Integer otherInt = temp.getRank();
+		
+		return thisInt.compareTo(otherInt);
+		//return ( this.getRank()).compareTo(temp.getRank()) );
+	}
+	@Override
 	public String toString(){
-		return (sport + " team: " + name + " ranked number " + rank + "\n" + "Players: " + players.toString() );
+		return (sport + " team: " + name + " ranked number " + rank);
 	}
 /*********************************************************************************************/
 }
