@@ -79,15 +79,15 @@ public class SortedLinkedList<E extends Comparable<E>> extends SortedList<E>{
 /*********************************************************************************************/
 /******************************* contains(Object object) *************************************/
 	@Override
-	public boolean contains(Object object){
+	public boolean contains(E item){
 		if(isEmpty())
 			return false;
 		
-		else if(object != null && head.element.getClass() == object.getClass()){
+		else if(item != null && head.element.getClass() == item.getClass()){
 			//E temp = (E)object;
 			Node<E> tempNode = head;
 			while(tempNode != null){
-				if(tempNode.element.equals(object))
+				if(tempNode.element.equals(item))
 					return true;
 				else
 					tempNode = tempNode.rightNode;

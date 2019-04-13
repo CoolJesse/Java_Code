@@ -22,7 +22,7 @@ public class Main{
 		System.out.println(list.toString());
 		
 		System.out.println("List contains 5: " + list.contains(5) );
-		/*
+		
 		System.out.println("List contains 500: " + list.contains(500));
 		System.out.println("List contains -5: " + list.contains(-5));
 		System.out.println("List contains a " + list.contains('a'));
@@ -31,7 +31,7 @@ public class Main{
 		System.out.println("Get element at index 0: " + list.get(0));
 		System.out.println("Get element at index 10: " + list.get(10));
 		System.out.println("Get element at index -1: " + list.get(-1));
-		
+		/*
 		System.out.println("Index of 5 is: " + list.indexOf(5));
 		System.out.println("Index of -100 is: " + list.indexOf(-100));
 		System.out.println("Index of a is: " + list.indexOf('a'));

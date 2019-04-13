@@ -39,10 +39,6 @@ abstract class SortedList<E extends Comparable<E>>{
 	}
 /********************************************************************************************/
 /** Fields **********************************************************************************/
-	/*
-	protected Node<E> head;
-	protected Node<E> tail;
-	*/
 	protected int size;
 	//type used for casting object to generic type when using compareTo() function
 	protected Class<E> type;
@@ -50,7 +46,8 @@ abstract class SortedList<E extends Comparable<E>>{
 /** Methods ********************************************************************************/
 	public abstract boolean add(E element);
 	public abstract void clear();
-	public abstract boolean contains(Object object);
+	//public abstract boolean contains(Object object);
+	public abstract boolean contains(E item);
 	//public abstract boolean equals(Object object);
 	
 	public abstract E get(int index);
