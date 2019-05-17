@@ -1,4 +1,12 @@
-// Math functions for Package project //
+/********************** Math functions for Package project ****************************/
+/**************************************************************************************/
+/* Class name: mylibrary.Series */
+/* Path name: mylibrary/Series.java */
+/* Full Path: C:\Users\jessetolson\Documents\computer_stuff\Java_Code\Java_Masterclass\P9_Packages_Static_And_Final_Keywords\mylibrary\Series */
+/**************************************************************************************/
+
+package mylibrary;
+
 import java.math.BigInteger;
 
 public class Series{
@@ -7,16 +15,18 @@ public class Series{
 		if(n <= 0)
 			return BigInteger.ZERO;
 		
+		// sum = (n + (n+1))/2
 		BigInteger sum = new BigInteger("0");
-		for(int i=n; i > 0; i--){
-			sum = sum.add(BigInteger.valueOf(i));
-		}
+		sum = BigInteger.valueOf(n);
+		sum = sum.multiply(BigInteger.valueOf(n+1));
+		sum = sum.divide(BigInteger.valueOf(2));
+		
 		return sum;
 	}
 // return product of numbers 1 through n //	
 	public static BigInteger factorial(int n){
 		if(n <= 0)
-			return BigInteger.ZERO;
+			return BigInteger.ONE;
 		
 		BigInteger product = new BigInteger("1");
 		for(int i=1; i <= n; i++){
