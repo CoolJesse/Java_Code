@@ -1,2 +1,2 @@
 /************************ Immutable Class Challenge *************************/
- * The Location class will compile but fail at runtime. The reason for this has something to do with the constructor. Figure out why and refactor code appropriately. 
+ * It's possible to crash this program. The problem is with the Location class. The Location class will compile but may fail at runtime. The reason for this has something to do with the constructor. Figure out why and refactor code appropriately. 
