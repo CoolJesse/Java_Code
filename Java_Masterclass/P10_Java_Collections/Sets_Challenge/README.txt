@@ -11,8 +11,7 @@
  * There is a restriction that the only satellites that planets can have must be moons. Even if you don't implement a STAR type, though, your program should not prevent one being added in the future (and a STAR's satellites can be almost every kind of HeavenlyBody).
 
 	Test cases:
-        1. The planets and moons that we added in the previous video should appear in
-        the solarSystem collection and in the sets of moons for the appropriate planets.
+        1. The planets and moons that we added in the previous video should appear in the solarSystem collection and in the sets of moons for the appropriate planets.
 
         2. a.equals(b) must return the same result as b.equals(a) - equals is symmetric.
 
