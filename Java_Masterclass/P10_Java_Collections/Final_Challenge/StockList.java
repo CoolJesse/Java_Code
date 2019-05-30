@@ -33,12 +33,23 @@ public class StockList {
     }
 /** Remove specified amount of items from stock *************************************/
     public int sellStock(String item, int quantity){
+	
+		if(quantity < 0){
+			System.out.println("Cannot sell negative items.");
+			return 0;
+		}
 		
-        StockItem inStock = list.getOrDefault(item, null);
-
-        if((inStock != null) && ((inStock.quantityInStock()-inStock.amountReserved()) >= quantity) && (quantity >0)) {
-            inStock.adjustStock(-quantity);
-            return quantity;
+        StockItem inStock = list.get(item);
+		
+        if(inStock != null){
+			if(inStock.quantityInStock() >= quantity){
+				inStock.adjustStock(-quantity);
+				return inStock.quantityInStock();				
+			}
+			else{
+				System.out.println("Cannot sell that many items. Not enough in stock.");
+				return inStock.quantityInStock();
+			}
         }
         return 0;
     }
@@ -50,7 +61,7 @@ public class StockList {
 			return false;
 		}
 		
-		StockItem inStock = list.getOrDefault(item, null);
+		StockItem inStock = list.get(item);
 	// Test if item is not found and thus not offered	
 		if(inStock == null){
 			System.out.println("Sorry, " + item + " is not offered by this seller.");
@@ -112,6 +123,6 @@ public class StockList {
             totalCost += itemValue;
         }
 
-        return s + "Total stock value " + totalCost;
+        return s + "Total stock value " + String.format("%.2f",totalCost);
     }
 }
