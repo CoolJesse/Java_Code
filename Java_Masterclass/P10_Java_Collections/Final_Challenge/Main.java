@@ -1,9 +1,13 @@
+
 import java.util.Map;
 
 public class Main {
+	/** Stocklist of all items for sale *****************************/
     private static StockList stockList = new StockList();
 
-    public static void main(String[] args) {
+    public static void main(String[] args){
+		
+	/** Populate StockList ******************************************/
 	    StockItem temp = new StockItem("bread", 0.86, 100);
         stockList.addStock(temp);
 
@@ -18,6 +22,7 @@ public class Main {
 
         temp = new StockItem("cup", 0.50, 200);
         stockList.addStock(temp);
+		
         temp = new StockItem("cup", 0.45, 7);
         stockList.addStock(temp);
 
@@ -37,12 +42,15 @@ public class Main {
         stockList.addStock(temp);
 
         System.out.println(stockList);
-
+	/********************************************************************/
+	
         for(String s: stockList.Items().keySet()) {
             System.out.println(s);
         }
 
+	/** Create Basket ***************************************************/
         Basket timsBasket = new Basket("Tim");
+		
         sellItem(timsBasket, "car", 1);
         System.out.println(timsBasket);
 
@@ -74,18 +82,53 @@ public class Main {
 
 
     }
-
-    public static int sellItem(Basket basket, String item, int quantity) {
-        //retrieve the item from stock list
+/************************************* Methods ***************************************/
+/** Final sale of item, remove from inventory and adjust number of reserved items **/
+    public static int sellItem(String item, int quantity){
+        // Retrieve the item from stock list
         StockItem stockItem = stockList.get(item);
         if(stockItem == null) {
             System.out.println("We don't sell " + item);
             return 0;
         }
         if(stockList.sellStock(item, quantity) != 0) {
-            basket.addToBasket(stockItem, quantity);
             return quantity;
         }
         return 0;
     }
+/** Add specified item to basket *****************************************************/
+	public static boolean addToBasket(Basket basket, String item, int quantity){
+	// Check for item in inventory
+		StockItem stockItem = stockList.getOrDefault(item, null);
+	// If item was not found in inventory
+		if(stockItem == null){
+			System.out.println("Sorry, " + item + " is not offered by this seller.");
+			return false;
+		}
+	// Make sure there are enough items to fill request
+		if(stockItem.reserveItem(quantity)){
+		// If there are add item(s) to basket
+  			basket.addToBasket(stockItem,quantity);
+			return true;
+		}
+	// If there are not enough items to fill request
+		else
+			System.out.println("Sorry, there are not enough items to fill that request. There are " + stockItem.quantityInStock()-stockItem.amountReserved() + " and you requested " + quantity);
+		
+		return false;
+	}
+/** Guest can check out and finalize sale *******************************************/	
+	public static void checkout(Basket basket){
+	// Return map of all items in basket to checkout
+		Map<stockItem, Integer> shoppingCart = basket.Items();
+	
+	// Finalize order for each element in basket
+		System.out.println("Final order: ");
+		for(Map.Entry<stockItem, Integer> item : shoppingCart.entrySet()){
+			System.out.println(item.getKey().getName() + ": " + item.getValue())
+			sellItem(item.getKey().getName(), item.getValue());
+		}
+	// Clear basket		
+		basket.checkOut();
+	}
 }
