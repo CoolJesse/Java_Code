@@ -49,29 +49,23 @@ public class Main {
 	/** Create Basket ***************************************************/
         Basket timsBasket = new Basket("Tim");
 		
-        //sellItem(timsBasket, "car", 1);
         addToBasket(timsBasket, "car", 1);
         System.out.println(timsBasket);
 
-        //sellItem(timsBasket, "car", 1);
         addToBasket(timsBasket, "car", 1);
         System.out.println(timsBasket);
 		
-	//if(sellItem(timsBasket, "car", 1) != 1) {
         if(addToBasket(timsBasket, "car", 1) == false) {
             System.out.println("Error");
         }
 
-        //sellItem(timsBasket, "spanner", 5);
         addToBasket(timsBasket, "spanner", 5);
         System.out.println(timsBasket);
 	
-        //sellItem(timsBasket, "juice", 4);
         addToBasket(timsBasket, "juice", 4);
-        //sellItem(timsBasket, "cup", 12);
         addToBasket(timsBasket, "cup", 12);
-        //sellItem(timsBasket, "bread", 1);
         addToBasket(timsBasket, "bread", 1);
+		
 		//print contents of basket
         System.out.println(timsBasket);
 		

@@ -61,7 +61,7 @@ public class HeavenlyBody {
 		return (name + ", has an orbital period of " + orbitalPeriod + " days," + " has the following satellites: " + satellites.toString() + ", and is a " + type.toString());
 	}
     @Override
-    public boolean equals(Object obj) {
+    public final boolean equals(Object obj) {
 		System.out.println("equals() called!");
         if(this == obj) {
             return true;
@@ -86,6 +86,6 @@ public class HeavenlyBody {
     }
 	@Override
 	public String toString(){
-		return name;
+		return this.name;
 	}
 }
