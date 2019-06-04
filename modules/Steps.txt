@@ -1,0 +1,29 @@
+Lesson from: https://openjdk.java.net/projects/jigsaw/quick-start
+
+From C:\Users\jessetolson\Documents\computer_stuff\Java_Code\modules
+
+Step 1: create Main.java file and module-info.java file
+	project_1/Main.java
+    module-info.java
+	
+Step 2: By convention, the source code for the module is in a directory that is the name of the module
+	module modules { }
+	
+Step 3: Write main source code to print message
+	package project_1;
+	
+    public class Main {
+        public static void main(String[] args) {
+            System.out.println("Fuck the World!");
+        }
+    }
+	
+Step 4: The source code is compiled to the directory mods/project_1 with the following commands:
+	$ mkdir -p mods/project_1
+	
+	 $ javac -d mods/project_1 module-info.java project_1/Main.java
+	 
+Step 5: Now we run the example with the following command
+	$ java --module-path mods -m modules/project_1.Main
+
+--module-path is the module path, its value is one or more directories that contain modules. The -m option specifies the main module, the value after the slash is the class name of the main class in the module
