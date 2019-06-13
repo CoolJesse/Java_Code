@@ -1,13 +1,15 @@
 Lesson from: https://openjdk.java.net/projects/jigsaw/quick-start
 
-From C:\Users\jessetolson\Documents\computer_stuff\Java_Code\modules
+/** Lesson 1 ***************************************************************/
+
+"C:\Users\jessetolson\Documents\computer_stuff\Java_Code\modules\modLessons\lessonONE"
 
 Step 1: create Main.java file and module-info.java file
-	project_1/Main.java
-    module-info.java
+	modules/modLessons/lessonONE/project_1/Main.java
+    modules/modLessons/lessonONE/module-info.java
 	
 Step 2: By convention, the source code for the module is in a directory that is the name of the module
-	module modules { }
+	module lessonONE {}
 	
 Step 3: Write main source code to print message
 	package project_1;
@@ -19,11 +21,306 @@ Step 3: Write main source code to print message
     }
 	
 Step 4: The source code is compiled to the directory mods/project_1 with the following commands:
-	$ mkdir -p mods/project_1
+
+From: C:\Users\jessetolson\Documents\computer_stuff\Java_Code\modules\modLessons\lessonONE
+	$ mkdir -p lessonONE/mods/project_1
 	
-	 $ javac -d mods/project_1 module-info.java project_1/Main.java
+	 $ javac -d lessonONE/mods/project_1 module-info.java project_1/Main.java
 	 
 Step 5: Now we run the example with the following command
-	$ java --module-path mods -m modules/project_1.Main
+	$ java --module-path lessonONE/mods -m lessonONE/project_1.Main
 
---module-path is the module path, its value is one or more directories that contain modules. The -m option specifies the main module, the value after the slash is the class name of the main class in the module
+--module-path is THE MODULE PATH, its value is one or more directories that contain modules. The -m option SPECIFIES THE MAIN MODULE, the value after the slash is THE CLASS NAME OF THE MAIN CLASS IN THE MODULE.
+
+/** Lesson 2 ***************************************************************/
+This second example updates the module declaration to declare a dependency on module lessonTWO. Module lessonTWO exports the API package lessonTWO.
+
+C:\Users\jessetolson\Documents\computer_stuff\Java_Code\modules\modLessons\lessonONE\module-info.java
+C:\Users\jessetolson\Documents\computer_stuff\Java_Code\modules\modLessons\lessonONE\project_1\Main.java
+
+C:\Users\jessetolson\Documents\computer_stuff\Java_Code\modules\modLessons\lessonTWO\module-info.java
+C:\Users\jessetolson\Documents\computer_stuff\Java_Code\modules\modLessons\lessonTWO\project_2\World.java
+
+Step 1:
+$ cat modules/modLessons/lessonTWO/module-info.java
+
+    module lessonTWO {
+        exports project_2;
+    }
+Step 2:
+  $ cat module/modLessons/lessonTWO/project_2/World.java
+  
+    package project_2;
+    public class World {
+        public static String name() {
+            return "World";
+        }
+    }
+Step 3:
+ $ cat modules/modLessons/lessonONE/module-info.java
+ 
+    module lessonONE {
+        requires lessonTWO;
+    }
+Step 4: 
+    $ cat modules/modLessons/lessonONE/project_1/Main.java
+	
+    package project_1;
+    import project_2.World;
+	
+    public class Main {
+        public static void main(String[] args) {
+            System.out.format("Greetings %s!%n", World.name());
+        }
+    }
+Step 5: The modules are compiled, one at a time. The javac command to compile module lesson_1 specifies a module path so that the reference to module lesson_2 and the types in its exported packages can be resolved.
+
+From: C:\Users\jessetolson\Documents\computer_stuff\Java_Code\modules\modLessons\
+
+    $ mkdir -p mods/lessonTWO mods/lessonONE
+
+    $ javac -d mods/lessonTWO lessonTWO/module-info.java /
+	lessonTWO/project_2/World.java
+
+    $ javac --module-path mods -d mods/lessonONE \
+        lessonONE/module-info.java lessonONE/project_1/Main.java
+		
+Step 6: The example is run in exactly the same way as the first example:
+    $ java --module-path mods -m lessonONE/project_1.Main
+    Greetings world!
+	
+/** Lesson 3/multi-module compilation **************************************/
+In the previous example then module LessonONE and module lessonTWO were compiled separately. It is also possible to compile multiple modules with one javac command:
+
+From: C:\Users\jessetolson\Documents\computer_stuff\Java_Code\modules
+	$ mkdir mods
+   
+    $ javac -d mods --module-source-path modLessons $(find modLessons -name "*.java")
+
+    $ find mods -type f
+    mods/lessonONE/project_1/Main.class
+    mods/lessonONE/module-info.class
+    mods/lessonTWO/module-info.class
+    mods/lessonTWO/project_2/World.class
+
+/** Packaging **************************************************************/
+In the examples so far then the contents of the compiled modules are exploded on the file system. For transportation and deployment purposes then it is usually more convenient to package a module as a modular JAR. A modular JAR is a regular JAR file that has a module-info.class in its top-level directory. The following example creates lessonTWO.jar and lessonONE.jar in directory mlib.
+
+From: C:\Users\jessetolson\Documents\computer_stuff\Java_Code\modules\modLessons
+
+    $ mkdir mlib
+
+    $ jar --create --file=mlib/lessonTWO@1.0.jar \
+        --module-version=1.0 -C mods/lessonTWO . //<-include period!!!
+
+    $ jar --create --file=mlib/lessonONE.jar \
+        --main-class=project_1.Main -C mods/lessonONE . //<-include period!!!
+
+    $ ls mlib
+    lessonONE.jar   lessonTWO@1.0.jar
+	
+In this example, then module lessonTWO is packaged to indicate that its version is 1.0. Module lessonONE has been packaged to indicate that its main class is project_1.Main. We can now execute module lessonONE without needing to specify its main class:
+    $ java -p mlib -m lessonONE
+    Greetings world!
+	
+The command line is also shortened by using -p as an alternative to --module-path.
+
+The jar tool has many new options (see jar -help), one of which is to print the module declaration for a module packaged as a modular JAR.
+
+    $ jar --describe-module --file=mlib/lessonTWO@1.0.jar
+	
+    lessonTWO@1.0 jar:file:///C:/Users/jessetolson/Documents/computer_stuff/
+	Java_Code/modules/modlessons/mlib/lessontwo@1.0.jar/!module-info.class
+    exports project_2
+    requires java.base mandated
+
+/** Missing requires or missing exports ************************************/
+
+C:\Users\jessetolson\Documents\computer_stuff\Java_Code\modules\modLessons
+
+Now let's see what happens with the previous example when we mistakenly omit the requires from the lessonONE module declaration:
+
+    $ cat lessonONE/module-info.java
+    module lessonONE {
+        // requires project_2;
+    }
+
+    $ javac --module-path mods -d mods/lessonONE \
+        lessonONE/module-info.java lessonONE/project_1/Main.java
+		
+    lessonONE/project_1/Main.java:2: error: package project_2 is not visible
+		import project_2.World;
+		
+		(package project_2 is declared in module lessonTWO, but module lessonONE does not read it)
+		1 error
+	
+We now fix this module declaration but introduce a different mistake, this time we omit the exports from the lessonTWO module declaration:
+
+    $ cat lessonONE/module-info.java
+    module lessonONE {
+        requires project_2;
+    }
+    $ cat lessonTWO/module-info.java
+    module lessonTWO {
+        // exports project_2;
+    }
+
+    $ javac --module-path mods -d mods/lessonONE \
+        lessonONE/module-info.java lessonONE/project_1/Main.java
+		
+    $ javac --module-path mods -d mods/lessonONE \
+       src/lessonONE/module-info.java lessonONE/project_1/Main.java
+	   
+    lessonONE/project_1/Main.java:2: error: package project_2 is not visible
+        import project_2.World;
+                  ^
+      (package project_2 is declared in module lessonTWO, which does not  export it)
+    1 error
+	
+/** Services **************************************************************/
+Services allow for loose coupling between service consumers modules and service providers modules. This example has a service consumer module and a service provider module: 
+
+	* module com.socket exports an API for network sockets. The API is in package com.socket so this package is exported. The API is pluggable to allow for alternative implementations. The service type is class com.socket.spi.NetworkSocketProvider in the same module and thus package com.socket.spi is also exported.
+	
+	* module org.fastsocket is a service provider module. It provides an implementation of com.socket.spi.NetworkSocketProvider. It does not export any packages.
+
+C:\Users\jessetolson\Documents\computer_stuff\Java_Code\modules\modLessons\lessonTHREE\socket\
+	
+The following is the source code for module first.socket .
+    $ cat lessonTHREE/first.socket/module-info.java
+    module socket {
+        exports com.socket;
+        exports com.socket.spi;
+        uses com.socket.spi.NetworkSocketProvider;
+    }
+
+    $ cat lessonThree/first.socket/first/socket/NetworkSocket.java
+    package first.socket;
+
+    import java.io.Closeable;
+    import java.util.Iterator;
+    import java.util.ServiceLoader;
+
+    import first.socket.spi.NetworkSocketProvider;
+
+    public abstract class NetworkSocket implements Closeable {
+        protected NetworkSocket() { }
+
+        public static NetworkSocket open() {
+            ServiceLoader<NetworkSocketProvider> sl
+                = ServiceLoader.load(NetworkSocketProvider.class);
+            Iterator<NetworkSocketProvider> iter = sl.iterator();
+            if (!iter.hasNext())
+                throw new RuntimeException("No service providers found!");
+            NetworkSocketProvider provider = iter.next();
+            return provider.openNetworkSocket();
+        }
+    }
+
+    $ cat lessonTHREE/first.socket/first/socket/spi/NetworkSocketProvider.java
+    package first.socket.spi;
+
+    import first.socket.NetworkSocket;
+
+    public abstract class NetworkSocketProvider {
+        protected NetworkSocketProvider() { }
+
+        public abstract NetworkSocket openNetworkSocket();
+    }
+	
+The following is the source code for module first.fastsocket .
+    $ cat lessonTHREE/first.fastsocket/module-info.java
+	
+    module first.fastsocket {
+        requires first.socket;
+        provides first.socket.spi.NetworkSocketProvider
+            with first.fastsocket.FastNetworkSocketProvider;
+    }
+
+    $ cat lessonTHREE/first.fastsocket/first/fastsocket/FastNetworkSocketProvider.java
+    package first.fastsocket;
+
+    import first.socket.NetworkSocket;
+    import first.socket.spi.NetworkSocketProvider;
+
+    public class FastNetworkSocketProvider extends NetworkSocketProvider {
+        public FastNetworkSocketProvider() { }
+
+        @Override
+        public NetworkSocket openNetworkSocket() {
+            return new FastNetworkSocket();
+        }
+    }
+
+    $ cat lessonTHREE/first.fastsocket/first/fastsocket/FastNetworkSocket.java
+    package first.fastsocket;
+
+    import first.socket.NetworkSocket;
+
+    public class FastNetworkSocket extends NetworkSocket {
+        FastNetworkSocket() { }
+        public void close() { }
+    }
+	
+For simplicity, we compile both modules together. In practice then the service consumer module and service provider modules will nearly always be compiled separately.
+
+C:\Users\jessetolson\Documents\computer_stuff\Java_Code\modules\modLessons
+
+    $ mkdir mods
+    $ javac -d mods --module-source-path lessonTHREE $(find lessonTHREE -name "*.java")
+	
+Finally we modify our module first.greetings to use the API.
+
+    $ cat lessonTHREE/first.greetings/module-info.java
+    module first.greetings {
+        requires first.socket;
+    }
+
+    $ cat lessonTHREE/first.greetings/first/greetings/Main.java
+    package first.greetings;
+
+    import first.socket.NetworkSocket;
+
+    public class Main {
+        public static void main(String[] args) {
+            NetworkSocket s = NetworkSocket.open();
+            System.out.println(s.getClass());
+        }
+    }
+
+
+    $ javac -d mods/first.greetings/ -p mods $(find lessonTHREE/first.greetings/ -name "*.java")
+	
+Finally we run it:
+    $ java -p mods -m first.greetings/first.greetings.Main
+	
+    class org.fastsocket.FastNetworkSocket
+	
+The output confirms that the service provider has been located and that it was used as the factory for the NetworkSocket.
+
+/** The linker ************************************************************/
+jlink is the linker tool and can be used to link a set of modules, along with their transitive dependences, to create a custom modular run-time image (see JEP 220).
+The tool currently requires that modules on the module path be packaged in modular JAR or JMOD format. The JDK build packages the standard and JDK-specific modules in JMOD format.
+
+The following example creates a run-time image that contains the module com.greetings and its transitive dependences:
+
+    jlink --module-path $JAVA_HOME/jmods:mlib --add-modules com.greetings --output greetingsapp
+The value to --module-path is a PATH of directories containing the packaged modules. Replace the path separator ':' with ';' on Microsoft Windows.
+$JAVA_HOME/jmods is the directory containing java.base.jmod and the other standard and JDK modules.
+
+The directory mlib on the module path contains the artifact for module com.greetings.
+
+The jlink tool supports many advanced options to customize the generated image, see jlink --help for more options.
+
+--patch-module
+Developers that checkout java.util.concurrent classes from Doug Lea's CVS will be used to compiling the source files and deploying those classes with -Xbootclasspath/p.
+-Xbootclasspath/p has been removed, its module replacement is the option --patch-module to override classes in a module. It can also be used to augment the contents of module. The --patch-module option is also supported by javac to compile code "as if" part of the module.
+
+Here's an example that compiles a new version of java.util.concurrent.ConcurrentHashMap and uses it at run-time:
+
+    javac --patch-module java.base=src -d mypatches/java.base \
+        src/java.base/java/util/concurrent/ConcurrentHashMap.java
+
+    java --patch-module java.base=mypatches/java.base ...
+
+
