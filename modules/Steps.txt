@@ -2,14 +2,14 @@ Lesson from: https://openjdk.java.net/projects/jigsaw/quick-start
 
 /** Lesson 1 ***************************************************************/
 
-"C:\Users\jessetolson\Documents\computer_stuff\Java_Code\modules\modLessons\lessonONE"
+"C:\Users\jessetolson\Documents\computer_stuff\Java_Code\modules\src\lessonONE"
 
 Step 1: create Main.java file and module-info.java file
-	modules/modLessons/lessonONE/project_1/Main.java
-    modules/modLessons/lessonONE/module-info.java
+	modules/src/lessonOne/project_1/Main.java
+    modules/src/lessonOne/module-info.java
 	
 Step 2: By convention, the source code for the module is in a directory that is the name of the module
-	module lessonONE {}
+	module lessonOne{}
 	
 Step 3: Write main source code to print message
 	package project_1;
@@ -20,88 +20,88 @@ Step 3: Write main source code to print message
         }
     }
 	
-Step 4: The source code is compiled to the directory mods/project_1 with the following commands:
+Step 4: The source code is compiled to the directory modules/out/lessonOne with the following commands:
 
-From: C:\Users\jessetolson\Documents\computer_stuff\Java_Code\modules\modLessons\lessonONE
-	$ mkdir -p lessonONE/mods/project_1
+From: C:\Users\jessetolson\Documents\computer_stuff\Java_Code\modules
+	$ mkdir -p out/lessonOne/
 	
-	 $ javac -d lessonONE/mods/project_1 module-info.java project_1/Main.java
+	 $ javac -d out/lessonOne src/lessonOne/module-info.java src/lessonOne/project_1/Main.java
 	 
 Step 5: Now we run the example with the following command
-	$ java --module-path lessonONE/mods -m lessonONE/project_1.Main
-
+	$ java --module-path out/lessonOne -m lessonOne/project_1.Main
+d
 --module-path is THE MODULE PATH, its value is one or more directories that contain modules. The -m option SPECIFIES THE MAIN MODULE, the value after the slash is THE CLASS NAME OF THE MAIN CLASS IN THE MODULE.
 
 /** Lesson 2 ***************************************************************/
 This second example updates the module declaration to declare a dependency on module lessonTWO. Module lessonTWO exports the API package lessonTWO.
 
-C:\Users\jessetolson\Documents\computer_stuff\Java_Code\modules\modLessons\lessonONE\module-info.java
-C:\Users\jessetolson\Documents\computer_stuff\Java_Code\modules\modLessons\lessonONE\project_1\Main.java
+C:\Users\jessetolson\Documents\computer_stuff\Java_Code\modules\src\lessonTwo\main\module-info.java
+C:\Users\jessetolson\Documents\computer_stuff\Java_Code\modules\src\lessonTwo\main\package_1\Main.java
 
-C:\Users\jessetolson\Documents\computer_stuff\Java_Code\modules\modLessons\lessonTWO\module-info.java
-C:\Users\jessetolson\Documents\computer_stuff\Java_Code\modules\modLessons\lessonTWO\project_2\World.java
+C:\Users\jessetolson\Documents\computer_stuff\Java_Code\modules\src\lessonTwo\world\module-info.java
+C:\Users\jessetolson\Documents\computer_stuff\Java_Code\modules\src\lessonTwo\world\package_2\World.java
 
 Step 1:
-$ cat modules/modLessons/lessonTWO/module-info.java
+$ cat modules/src/lessonTwo/world/module-info.java
 
-    module lessonTWO {
-        exports project_2;
+    module lessonTwo {
+        exports package_2;
     }
 Step 2:
-  $ cat module/modLessons/lessonTWO/project_2/World.java
+  $ cat module/src/lessonTwo/world/package_2/World.java
   
-    package project_2;
+    package package_2;
     public class World {
         public static String name() {
             return "World";
         }
     }
 Step 3:
- $ cat modules/modLessons/lessonONE/module-info.java
+ $ cat modules/src/lessonTwo/main/module-info.java
  
-    module lessonONE {
-        requires lessonTWO;
+    module main {
+        requires world;
     }
 Step 4: 
-    $ cat modules/modLessons/lessonONE/project_1/Main.java
+    $ cat modules/src/lessonTwo/main/package_1/Main.java
 	
-    package project_1;
-    import project_2.World;
+    package package_1;
+    import package_2.World;
 	
     public class Main {
         public static void main(String[] args) {
             System.out.format("Greetings %s!%n", World.name());
         }
     }
-Step 5: The modules are compiled, one at a time. The javac command to compile module lesson_1 specifies a module path so that the reference to module lesson_2 and the types in its exported packages can be resolved.
+Step 5: The modules are compiled, one at a time. The javac command to compile module main specifies a module path so that the reference to module world and the types in its exported packages can be resolved.
 
-From: C:\Users\jessetolson\Documents\computer_stuff\Java_Code\modules\modLessons\
+From: C:\Users\jessetolson\Documents\computer_stuff\Java_Code\modules
 
-    $ mkdir -p mods/lessonTWO mods/lessonONE
+    $ mkdir -p out/lessonTwo/main/package_1 out/lessonTwo/world/package_2/World
 
-    $ javac -d mods/lessonTWO lessonTWO/module-info.java /
-	lessonTWO/project_2/World.java
+    $ javac -d out/lessonTwo/world src/lessonTwo/world/module-info.java /
+	src/lessonTwo/world/package_2/World.java
 
-    $ javac --module-path mods -d mods/lessonONE \
-        lessonONE/module-info.java lessonONE/project_1/Main.java
+    $ javac --module-path out/lessonTwo/world -d out/lessonTwo/main \
+        src/lessonTwo/main/module-info.java src/lessonTwo/main/package_1/Main.java
 		
 Step 6: The example is run in exactly the same way as the first example:
-    $ java --module-path mods -m lessonONE/project_1.Main
+    $ java --module-path out/lessonTwo -m main/package_1.Main
     Greetings world!
 	
 /** Lesson 3/multi-module compilation **************************************/
-In the previous example then module LessonONE and module lessonTWO were compiled separately. It is also possible to compile multiple modules with one javac command:
+In the previous example then module main and module world were compiled separately. It is also possible to compile multiple modules with one javac command:
 
 From: C:\Users\jessetolson\Documents\computer_stuff\Java_Code\modules
-	$ mkdir mods
+	$ mkdir out/lessonThree
    
-    $ javac -d mods --module-source-path modLessons $(find modLessons -name "*.java")
+    $ javac -d out/lessonThree --module-source-path src/lessonTwo $(find lessonTwo -name "*.java")
 
-    $ find mods -type f
-    mods/lessonONE/project_1/Main.class
-    mods/lessonONE/module-info.class
-    mods/lessonTWO/module-info.class
-    mods/lessonTWO/project_2/World.class
+    $ find out/lessonThree -type f
+	out/lessonThree/main/module-info.class
+	out/lessonThree/main/package_1/Main.class
+	out/lessonThree/world/module-info.class
+	out/lessonThree/world/package_2/World.class
 
 /** Packaging **************************************************************/
 In the examples so far then the contents of the compiled modules are exploded on the file system. For transportation and deployment purposes then it is usually more convenient to package a module as a modular JAR. A modular JAR is a regular JAR file that has a module-info.class in its top-level directory. The following example creates lessonTWO.jar and lessonONE.jar in directory mlib.
